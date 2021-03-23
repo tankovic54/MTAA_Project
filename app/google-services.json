@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "938773829370",
+    "project_id": "hidden-sunlight-308513",
+    "storage_bucket": "hidden-sunlight-308513.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938773829370:android:f9117bb422874ddd4c1b43",
+        "android_client_info": {
+          "package_name": "com.fiit.mtaa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "938773829370-mjqte08j42if5b644o5cnpfi0ovt8k3k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD10OYRNaXv1tbZ_RE_EDNMbjCQza0OhFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "938773829370-mjqte08j42if5b644o5cnpfi0ovt8k3k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
