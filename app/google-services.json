@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "476953211362",
+    "project_id": "mtaa-65e24",
+    "storage_bucket": "mtaa-65e24.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:476953211362:android:42c48b8664f14d8b91c9bb",
+        "android_client_info": {
+          "package_name": "com.fiit.notes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "476953211362-3o0v7l14dbfth3ns3atm8em4ucvvj095.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDsSzHjK1OYvEYch2sC8T8wKu-rLEdUT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "476953211362-3o0v7l14dbfth3ns3atm8em4ucvvj095.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
