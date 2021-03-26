@@ -1,4 +1,4 @@
-package com.fiit.mtaa
+package com.fiit.notes
 
 import org.junit.Test
 
