@@ -20,7 +20,6 @@ class RegisterClass : AppCompatActivity() {
         }
         val mail = mail.text.toString()
         val password = pass.text.toString()
-//        val registration_instance = SaveInfo(name, mail, password)
         val dbRef = FirebaseDatabase.getInstance().getReference("Users")
         val user_id = dbRef.push().key
         val user = user_id?.let { SaveInfo(it, name, mail, password) }
