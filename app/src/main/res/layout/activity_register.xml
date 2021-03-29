@@ -12,16 +12,6 @@
 
 
     <TextView
-        android:id="@+id/welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#732DFF"
-        android:textStyle="italic"
-        android:fontFamily="casual"
-        android:text="@string/app_name"
-        android:textSize="40sp"/>
-
-    <TextView
         android:id="@+id/slogan_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,8 +27,17 @@
         android:layout_height="60dp"
         android:layout_gravity="left"
         android:layout_marginTop="15dp"
+        android:contentDescription="Profile Picture"
         android:shape="ring"
-        android:contentDescription="Profile Picture" />
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="Change Image"
+        android:id="@+id/change_picture"
+        android:layout_marginTop="5dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
