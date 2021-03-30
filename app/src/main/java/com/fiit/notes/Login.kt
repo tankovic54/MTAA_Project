@@ -46,7 +46,7 @@ class Login : AppCompatActivity() {
                         startActivity(goHome)
                     }
                     else{
-                        Toast.makeText(applicationContext,"Error occured", Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext,"Error occurred", Toast.LENGTH_LONG).show()
                         val goToLog = Intent(this, Login:: class.java)
                         startActivity(goToLog)
                     }
