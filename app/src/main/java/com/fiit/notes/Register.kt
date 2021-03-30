@@ -2,6 +2,7 @@ package com.fiit.notes
 
 import android.app.Activity
 import android.content.Intent
+import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
@@ -9,15 +10,12 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.Continuation
-import com.google.android.gms.tasks.Task
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
+import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.StorageTask
-import com.google.firebase.storage.UploadTask
 
 class RegisterClass : AppCompatActivity() {
     lateinit var username: EditText
@@ -26,52 +24,13 @@ class RegisterClass : AppCompatActivity() {
     lateinit var buttonRegister : Button
     lateinit var profilePicture : ImageView
     lateinit var changePic : Button
-    val RequestCode = 438
-    var imageUri: Uri? = null
     var storageRef: StorageReference? = null
-
-    private fun uploadImageToDatabase(){
-        if (imageUri != null){
-            val fileRef = storageRef!!.child(System.currentTimeMillis().toString() + ".jpg")
-            val uploadTask: StorageTask<*>
-            uploadTask = fileRef.putFile(imageUri!!)
-            uploadTask.continueWithTask(Continuation <UploadTask.TaskSnapshot,Task<Uri>>{ task ->
-                if (!task.isSuccessful) {
-                    task.exception.let {
-                        throw it!!
-                    }
-                }
-                    return@Continuation fileRef.downloadUrl
-            }).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val downloadUrl = task.result
-                    val url = downloadUrl.toString()
-                }
-            }
-        }
-
-    }
-
-    fun imagePick(){
-        val openGallery = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent, RequestCode)
-        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
-            super.onActivityResult(requestCode, resultCode, data)
-            if (requestCode == RequestCode && resultCode == Activity.RESULT_OK ){
-                if (data != null) {
-                    imageUri = data.data
-                    Toast.makeText(applicationContext, "Uploading", Toast.LENGTH_LONG).show()
-                    uploadImageToDatabase()
-                }
-            }
-        }
-
-    }
+    lateinit var auth: FirebaseAuth
+    var fileUri : Uri? = null
 
      fun register(){
 
+        auth = FirebaseAuth.getInstance()
         val name = username.text.toString()
         if (name.isEmpty()){
             username.error = "Please enter username"
@@ -90,14 +49,43 @@ class RegisterClass : AppCompatActivity() {
          }
         val dbRef = FirebaseDatabase.getInstance().getReference("Users")
         val userId = dbRef.push().key
+
         val user = userId?.let { SaveInfo(it, name, email, password) }
+         auth.createUserWithEmailAndPassword(email, password)
+         auth.currentUser.let {
+             val update = UserProfileChangeRequest.Builder()
+                 .setPhotoUri(fileUri)
+                 .build()
+             it?.updateProfile(update)
+         }
         if (userId != null) {
             dbRef.child(userId).setValue(user).addOnCompleteListener {
                 Toast.makeText(applicationContext,"User saved successfully", Toast.LENGTH_LONG).show()
             }
         }
     }
-
+    fun selectImage(){
+        ImagePicker.with(this)
+            .crop()
+            .compress(1024)
+            .maxResultSize(1080, 1080)
+            .start()
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+        super.onActivityResult(requestCode, resultCode, data)
+        when (resultCode){
+            Activity.RESULT_OK -> {
+                fileUri = data?.data
+                profilePicture.setImageURI(fileUri)
+            }
+            ImagePicker.RESULT_ERROR ->{
+                Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                Toast.makeText(this, "Task cancelled", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,7 +99,10 @@ class RegisterClass : AppCompatActivity() {
         changePic = findViewById(R.id.change_picture)
         storageRef = FirebaseStorage.getInstance().reference.child("User Images")
         changePic.setOnClickListener {
-            imagePick()
+
+        }
+        changePic.setOnClickListener{
+            selectImage()
         }
         buttonRegister.setOnClickListener {
             register()
