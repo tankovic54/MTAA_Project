@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="770dp"
     tools:context=".Login"
     android:orientation="vertical"
     android:background="#666666"
-    android:padding="20dp"
-    android:layout_marginTop="20dp">
+    android:padding="20dp">
 
 
     <TextView
@@ -57,7 +56,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="5dp"
             android:id="@+id/username"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:orientation="vertical"/>
@@ -103,7 +102,7 @@
             android:textSize="20sp"
             android:orientation="vertical"/>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginBottom="15dp"
@@ -115,7 +114,7 @@
         <Button
             android:id="@+id/buttonReg"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:background="#666666"
             android:fontFamily="sans-serif"
@@ -124,6 +123,19 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textStyle="bold" />
+        <Button
+        android:id="@+id/backButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center"
+        android:background="#666666"
+        android:fontFamily="sans-serif"
+        android:text="Go back"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
     </LinearLayout>
 </LinearLayout>
