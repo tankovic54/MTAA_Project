@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -11,6 +12,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -27,6 +30,10 @@ class RegisterClass : AppCompatActivity() {
     var storageRef: StorageReference? = null
     lateinit var auth: FirebaseAuth
     var fileUri : Uri? = null
+
+    fun isEmailValid(email: CharSequence?): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
 
     fun register(): Boolean {
 
@@ -46,11 +53,22 @@ class RegisterClass : AppCompatActivity() {
              return false
          }
 
+        val validmail = isEmailValid(email)
+        if (!validmail){
+            mail.error = "Please enter valid email address"
+            return false
+        }
+
          val password = pass.text.toString()
          if (password.isEmpty()){
              pass.error = "Please enter password"
              return false
          }
+
+        if (password.length<6){
+            pass.error = "Please enter at least 6 characters"
+            return false
+        }
          val confirmPass = confirmPassword.text.toString()
          if (!password.equals(confirmPass)){
              confirmPassword.error = "Password does not match"
