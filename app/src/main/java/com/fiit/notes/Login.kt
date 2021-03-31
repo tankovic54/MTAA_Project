@@ -47,8 +47,9 @@ class Login : AppCompatActivity() {
                     }
                     else{
                         Toast.makeText(applicationContext,"Error occured", Toast.LENGTH_LONG).show()
-                        val goToLog = Intent(this, Login:: class.java)
-                        startActivity(goToLog)
+                        return@addOnCompleteListener
+                        //val goToLog = Intent(this, Login:: class.java)
+                        //startActivity(goToLog)
                     }
                 }
         }

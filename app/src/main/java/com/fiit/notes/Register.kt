@@ -2,7 +2,6 @@ package com.fiit.notes
 
 import android.app.Activity
 import android.content.Intent
-import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
@@ -21,6 +20,7 @@ class RegisterClass : AppCompatActivity() {
     lateinit var username: EditText
     lateinit var mail: com.google.android.material.textfield.TextInputEditText
     lateinit var pass: com.google.android.material.textfield.TextInputEditText
+    lateinit var confirmPassword: com.google.android.material.textfield.TextInputEditText
     lateinit var buttonRegister : Button
     lateinit var profilePicture : ImageView
     lateinit var changePic : Button
@@ -28,25 +28,35 @@ class RegisterClass : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
     var fileUri : Uri? = null
 
-     fun register(){
+    fun register(): Boolean {
 
         auth = FirebaseAuth.getInstance()
-        val name = username.text.toString()
+        if (fileUri == null){
+            fileUri = Uri.parse("android.resource://com.fiit.notes/34AD2")
+        }
+         val name = username.text.toString()
         if (name.isEmpty()){
             username.error = "Please enter username"
-            return
+            return false
         }
+
         val email = mail.text.toString()
          if (email.isEmpty()){
              mail.error = "Please enter email"
-             return
+             return false
          }
 
          val password = pass.text.toString()
          if (password.isEmpty()){
              pass.error = "Please enter password"
-             return
+             return false
          }
+         val confirmPass = confirmPassword.text.toString()
+         if (!password.equals(confirmPass)){
+             confirmPassword.error = "Password does not match"
+             return false
+         }
+
         val dbRef = FirebaseDatabase.getInstance().getReference("Users")
         val userId = dbRef.push().key
 
@@ -63,6 +73,7 @@ class RegisterClass : AppCompatActivity() {
                 Toast.makeText(applicationContext,"User saved successfully", Toast.LENGTH_LONG).show()
             }
         }
+         return true
     }
     fun selectImage(){
         ImagePicker.with(this)
@@ -94,6 +105,7 @@ class RegisterClass : AppCompatActivity() {
         username = findViewById(R.id.username)
         mail = findViewById(R.id.email)
         pass = findViewById(R.id.password)
+        confirmPassword = findViewById(R.id.confirm_password)
         profilePicture = findViewById(R.id.profile_picture)
         buttonRegister = findViewById(R.id.buttonReg)
         changePic = findViewById(R.id.change_picture)
@@ -105,9 +117,11 @@ class RegisterClass : AppCompatActivity() {
             selectImage()
         }
         buttonRegister.setOnClickListener {
-            register()
-            val goToLogin = Intent(this, Login:: class.java)
-            startActivity(goToLogin)
+            var check = register()
+            if (check) {
+                val goToLogin = Intent(this, Login::class.java)
+                startActivity(goToLogin)
+            }
         }
         val buttonBack = findViewById<Button>(R.id.backButton)
         buttonBack.setOnClickListener{
