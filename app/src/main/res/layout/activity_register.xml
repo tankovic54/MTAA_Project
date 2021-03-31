@@ -6,7 +6,7 @@
     android:layout_height="770dp"
     tools:context=".Login"
     android:orientation="vertical"
-    android:background="#666666"
+    android:background="@color/white"
     android:padding="20dp">
 
 
@@ -14,7 +14,7 @@
         android:id="@+id/slogan_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:text="Register now"
         android:layout_marginTop="20dp"
@@ -26,69 +26,70 @@
         android:layout_height="60dp"
         android:layout_gravity="left"
         android:layout_marginTop="15dp"
+        android:src="@drawable/gigachad"
         android:contentDescription="Profile Picture"
-        android:shape="ring"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        android:shape="ring" />
 
     <Button
+        android:id="@+id/change_picture"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:text="Change Image"
-        android:id="@+id/change_picture"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp"
+        android:text="Change Image" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="90dp"
+        android:layout_marginBottom="70dp"
         android:orientation="vertical">
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/nameHint"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="Username"
             android:textSize="20sp"
             android:orientation="vertical"/>
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginBottom="5dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:id="@+id/username"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:orientation="vertical"/>
 
         <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:text="Email"
-        android:textSize="20sp"
-        android:orientation="vertical"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Email"
+            android:textSize="20sp"
+            android:orientation="vertical"/>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:layout_marginBottom="15dp"
             android:orientation="vertical" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="Password"
             android:textSize="20sp"
             android:orientation="vertical"/>
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginBottom="15dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:id="@+id/password"
             android:inputType="textPassword"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -97,15 +98,15 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="Confirm Password"
             android:textSize="20sp"
             android:orientation="vertical"/>
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginBottom="15dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:id="@+id/confirm_password"
             android:inputType="textPassword"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -124,18 +125,18 @@
             android:textColor="@color/white"
             android:textStyle="bold" />
         <Button
-        android:id="@+id/backButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="5dp"
-        android:layout_gravity="center"
-        android:background="#666666"
-        android:fontFamily="sans-serif"
-        android:text="Go back"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
+            android:id="@+id/backButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:background="#666666"
+            android:fontFamily="sans-serif"
+            android:text="Go back"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
     </LinearLayout>
 </LinearLayout>

@@ -9,95 +9,94 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.Continuation
-import com.google.android.gms.tasks.Task
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
+import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.StorageTask
-import com.google.firebase.storage.UploadTask
 
 class RegisterClass : AppCompatActivity() {
     lateinit var username: EditText
     lateinit var mail: com.google.android.material.textfield.TextInputEditText
     lateinit var pass: com.google.android.material.textfield.TextInputEditText
+    lateinit var confirmPassword: com.google.android.material.textfield.TextInputEditText
     lateinit var buttonRegister : Button
     lateinit var profilePicture : ImageView
     lateinit var changePic : Button
-    val RequestCode = 438
-    var imageUri: Uri? = null
     var storageRef: StorageReference? = null
+    lateinit var auth: FirebaseAuth
+    var fileUri : Uri? = null
 
-    private fun uploadImageToDatabase(){
-        if (imageUri != null){
-            val fileRef = storageRef!!.child(System.currentTimeMillis().toString() + ".jpg")
-            val uploadTask: StorageTask<*>
-            uploadTask = fileRef.putFile(imageUri!!)
-            uploadTask.continueWithTask(Continuation <UploadTask.TaskSnapshot,Task<Uri>>{ task ->
-                if (!task.isSuccessful) {
-                    task.exception.let {
-                        throw it!!
-                    }
-                }
-                    return@Continuation fileRef.downloadUrl
-            }).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val downloadUrl = task.result
-                    val url = downloadUrl.toString()
-                }
-            }
+    fun register(): Boolean {
+
+        auth = FirebaseAuth.getInstance()
+        if (fileUri == null){
+            fileUri = Uri.parse("android.resource://com.fiit.notes/34AD2")
         }
-
-    }
-
-    fun imagePick(){
-        val openGallery = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent, RequestCode)
-        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
-            super.onActivityResult(requestCode, resultCode, data)
-            if (requestCode == RequestCode && resultCode == Activity.RESULT_OK ){
-                if (data != null) {
-                    imageUri = data.data
-                    Toast.makeText(applicationContext, "Uploading", Toast.LENGTH_LONG).show()
-                    uploadImageToDatabase()
-                }
-            }
-        }
-
-    }
-
-     fun register(){
-
-        val name = username.text.toString()
+         val name = username.text.toString()
         if (name.isEmpty()){
             username.error = "Please enter username"
-            return
+            return false
         }
+
         val email = mail.text.toString()
          if (email.isEmpty()){
              mail.error = "Please enter email"
-             return
+             return false
          }
 
          val password = pass.text.toString()
          if (password.isEmpty()){
              pass.error = "Please enter password"
-             return
+             return false
          }
+         val confirmPass = confirmPassword.text.toString()
+         if (!password.equals(confirmPass)){
+             confirmPassword.error = "Password does not match"
+             return false
+         }
+
         val dbRef = FirebaseDatabase.getInstance().getReference("Users")
         val userId = dbRef.push().key
+
         val user = userId?.let { SaveInfo(it, name, email, password) }
+         auth.createUserWithEmailAndPassword(email, password)
+         auth.currentUser.let {
+             val update = UserProfileChangeRequest.Builder()
+                 .setPhotoUri(fileUri)
+                 .build()
+             it?.updateProfile(update)
+         }
         if (userId != null) {
             dbRef.child(userId).setValue(user).addOnCompleteListener {
                 Toast.makeText(applicationContext,"User saved successfully", Toast.LENGTH_LONG).show()
             }
         }
+         return true
     }
-
+    fun selectImage(){
+        ImagePicker.with(this)
+            .crop()
+            .compress(1024)
+            .maxResultSize(1080, 1080)
+            .start()
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+        super.onActivityResult(requestCode, resultCode, data)
+        when (resultCode){
+            Activity.RESULT_OK -> {
+                fileUri = data?.data
+                profilePicture.setImageURI(fileUri)
+            }
+            ImagePicker.RESULT_ERROR ->{
+                Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                Toast.makeText(this, "Task cancelled", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,17 +105,23 @@ class RegisterClass : AppCompatActivity() {
         username = findViewById(R.id.username)
         mail = findViewById(R.id.email)
         pass = findViewById(R.id.password)
+        confirmPassword = findViewById(R.id.confirm_password)
         profilePicture = findViewById(R.id.profile_picture)
         buttonRegister = findViewById(R.id.buttonReg)
         changePic = findViewById(R.id.change_picture)
         storageRef = FirebaseStorage.getInstance().reference.child("User Images")
         changePic.setOnClickListener {
-            imagePick()
+
+        }
+        changePic.setOnClickListener{
+            selectImage()
         }
         buttonRegister.setOnClickListener {
-            register()
-            val goToLogin = Intent(this, Login:: class.java)
-            startActivity(goToLogin)
+            var check = register()
+            if (check) {
+                val goToLogin = Intent(this, Login::class.java)
+                startActivity(goToLogin)
+            }
         }
         val buttonBack = findViewById<Button>(R.id.backButton)
         buttonBack.setOnClickListener{
