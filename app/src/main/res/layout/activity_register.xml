@@ -6,7 +6,7 @@
     android:layout_height="770dp"
     tools:context=".Login"
     android:orientation="vertical"
-    android:background="#666666"
+    android:background="@color/white"
     android:padding="20dp">
 
 
@@ -14,7 +14,7 @@
         android:id="@+id/slogan_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:text="Register now"
         android:layout_marginTop="20dp"
@@ -26,9 +26,9 @@
         android:layout_height="60dp"
         android:layout_gravity="left"
         android:layout_marginTop="15dp"
+        android:src="@drawable/gigachad"
         android:contentDescription="Profile Picture"
-        android:shape="ring"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        android:shape="ring" />
 
     <Button
         android:id="@+id/change_picture"
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/nameHint"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="Username"
             android:textSize="20sp"
             android:orientation="vertical"/>
@@ -56,7 +56,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:id="@+id/username"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:orientation="vertical"/>
@@ -64,7 +64,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="Email"
             android:textSize="20sp"
             android:orientation="vertical"/>
@@ -74,14 +74,14 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:layout_marginBottom="15dp"
             android:orientation="vertical" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="Password"
             android:textSize="20sp"
             android:orientation="vertical"/>
@@ -89,7 +89,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:id="@+id/password"
             android:inputType="textPassword"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -98,7 +98,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="Confirm Password"
             android:textSize="20sp"
             android:orientation="vertical"/>
@@ -106,7 +106,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:id="@+id/confirm_password"
             android:inputType="textPassword"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
