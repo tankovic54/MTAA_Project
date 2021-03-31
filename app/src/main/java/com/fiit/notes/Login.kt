@@ -20,10 +20,10 @@ class Login : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         auth = FirebaseAuth.getInstance()
         val regButton = findViewById<Button>(R.id.registration_button)
-            regButton.setOnClickListener{
-                val goToReg = Intent(this, RegisterClass:: class.java)
-                startActivity(goToReg)
-            }
+        regButton.setOnClickListener{
+            val goToReg = Intent(this, RegisterClass:: class.java)
+            startActivity(goToReg)
+        }
         mail = findViewById(R.id.email_input)
         pass = findViewById(R.id.password_input)
         val loginButton = findViewById<Button>(R.id.login_button)
@@ -39,19 +39,17 @@ class Login : AppCompatActivity() {
                 return@setOnClickListener
             }
             auth.signInWithEmailAndPassword(email,password)
-                .addOnCompleteListener {
-                    if (it.isSuccessful){
-                        Toast.makeText(applicationContext,"Logged in", Toast.LENGTH_LONG).show()
-                        val goHome = Intent(this, Homepage:: class.java)
-                        startActivity(goHome)
+                    .addOnCompleteListener {
+                        if (it.isSuccessful){
+                            Toast.makeText(applicationContext,"Logged in", Toast.LENGTH_LONG).show()
+                            val goHome = Intent(this, Homepage:: class.java)
+                            startActivity(goHome)
+                        }
+                        else{
+                            Toast.makeText(applicationContext,"Error occured", Toast.LENGTH_LONG).show()
+                            return@addOnCompleteListener
+                        }
                     }
-                    else{
-                        Toast.makeText(applicationContext,"Error occured", Toast.LENGTH_LONG).show()
-                        return@addOnCompleteListener
-                        //val goToLog = Intent(this, Login:: class.java)
-                        //startActivity(goToLog)
-                    }
-                }
         }
     }
 }

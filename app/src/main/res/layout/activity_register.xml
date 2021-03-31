@@ -62,12 +62,12 @@
             android:orientation="vertical"/>
 
         <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:text="Email"
-        android:textSize="20sp"
-        android:orientation="vertical"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Email"
+            android:textSize="20sp"
+            android:orientation="vertical"/>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
@@ -125,18 +125,18 @@
             android:textColor="@color/white"
             android:textStyle="bold" />
         <Button
-        android:id="@+id/backButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="5dp"
-        android:layout_gravity="center"
-        android:background="#666666"
-        android:fontFamily="sans-serif"
-        android:text="Go back"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
+            android:id="@+id/backButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:background="#666666"
+            android:fontFamily="sans-serif"
+            android:text="Go back"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
     </LinearLayout>
 </LinearLayout>
