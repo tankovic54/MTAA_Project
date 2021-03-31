@@ -83,6 +83,7 @@ class RegisterClass : AppCompatActivity() {
          auth.currentUser.let {
              val update = UserProfileChangeRequest.Builder()
                  .setPhotoUri(fileUri)
+                 .setDisplayName(name)
                  .build()
              it?.updateProfile(update)
          }
@@ -146,7 +147,6 @@ class RegisterClass : AppCompatActivity() {
             val goToLogin = Intent(this, Login:: class.java)
             startActivity(goToLogin)
         }
-
     }
 }
 
