@@ -14,7 +14,7 @@ class Homepage : AppCompatActivity() {
             val goToLogin = Intent(this, Login:: class.java)
             startActivity(goToLogin)
         }
-        val addNoteBtn = findViewById<Button>(R.id.addNote)
+        val addNoteBtn = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.addNote)
         addNoteBtn.setOnClickListener{
             val createNote = Intent(this, CreateNote:: class.java)
             startActivity(createNote)
