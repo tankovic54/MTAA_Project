@@ -31,11 +31,11 @@ class RegisterClass : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
     var fileUri : Uri? = null
 
-    fun isEmailValid(email: CharSequence?): Boolean {
+    private fun isEmailValid(email: CharSequence): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    fun register(): Boolean {
+    private fun register(): Boolean {
 
         auth = FirebaseAuth.getInstance()
         if (fileUri == null){
@@ -53,8 +53,8 @@ class RegisterClass : AppCompatActivity() {
              return false
          }
 
-        val validmail = isEmailValid(email)
-        if (!validmail){
+        val validMail = isEmailValid(email)
+        if (!validMail){
             mail.error = "Please enter valid email address"
             return false
         }
@@ -70,7 +70,7 @@ class RegisterClass : AppCompatActivity() {
             return false
         }
          val confirmPass = confirmPassword.text.toString()
-         if (!password.equals(confirmPass)){
+         if (password != confirmPass){
              confirmPassword.error = "Password does not match"
              return false
          }
@@ -93,7 +93,7 @@ class RegisterClass : AppCompatActivity() {
         }
          return true
     }
-    fun selectImage(){
+    private fun selectImage(){
         ImagePicker.with(this)
             .crop()
             .compress(1024)
