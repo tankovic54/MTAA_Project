@@ -5,11 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Button
-import com.google.firebase.auth.FirebaseAuth
 
 class updateEmail : AppCompatActivity() {
     lateinit var backButton: Button
-    lateinit var auth: FirebaseAuth
     lateinit var emailInput: com.google.android.material.textfield.TextInputEditText
     lateinit var mailButton: Button
 
@@ -23,9 +21,6 @@ class updateEmail : AppCompatActivity() {
         backButton = findViewById(R.id.backButton_email)
         mailButton = findViewById(R.id.emailButton)
 
-        auth = FirebaseAuth.getInstance()
-        val user = auth.currentUser
-
         mailButton.setOnClickListener {
             val email = emailInput.text.toString()
             if (email.isEmpty()){
@@ -37,7 +32,6 @@ class updateEmail : AppCompatActivity() {
                 emailInput.error = "Please enter valid email address"
                 return@setOnClickListener
             }
-            user.updateEmail(email)
             val goBack = Intent(this, settings::class.java)
             startActivity(goBack)
         }

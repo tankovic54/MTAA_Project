@@ -11,11 +11,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
-import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
@@ -28,72 +23,12 @@ class RegisterClass : AppCompatActivity() {
     lateinit var profilePicture : ImageView
     lateinit var changePic : Button
     var storageRef: StorageReference? = null
-    lateinit var auth: FirebaseAuth
     var fileUri : Uri? = null
 
     private fun isEmailValid(email: CharSequence): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    private fun register(): Boolean {
-
-        auth = FirebaseAuth.getInstance()
-        if (fileUri == null){
-            fileUri = Uri.parse("android.resource://com.fiit.notes/34AD2")
-        }
-         val name = username.text.toString()
-        if (name.isEmpty()){
-            username.error = "Please enter username"
-            return false
-        }
-
-        val email = mail.text.toString()
-         if (email.isEmpty()){
-             mail.error = "Please enter email"
-             return false
-         }
-
-        val validMail = isEmailValid(email)
-        if (!validMail){
-            mail.error = "Please enter valid email address"
-            return false
-        }
-
-         val password = pass.text.toString()
-         if (password.isEmpty()){
-             pass.error = "Please enter password"
-             return false
-         }
-
-        if (password.length<6){
-            pass.error = "Please enter at least 6 characters"
-            return false
-        }
-         val confirmPass = confirmPassword.text.toString()
-         if (password != confirmPass){
-             confirmPassword.error = "Password does not match"
-             return false
-         }
-
-        val dbRef = FirebaseDatabase.getInstance().getReference("Users")
-        val userId = dbRef.push().key
-
-        val user = userId?.let { SaveInfo(it, name, email, password) }
-         auth.createUserWithEmailAndPassword(email, password)
-         auth.currentUser.let {
-             val update = UserProfileChangeRequest.Builder()
-                 .setPhotoUri(fileUri)
-                 .setDisplayName(name)
-                 .build()
-             it?.updateProfile(update)
-         }
-        if (userId != null) {
-            dbRef.child(userId).setValue(user).addOnCompleteListener {
-                Toast.makeText(applicationContext,"User saved successfully", Toast.LENGTH_LONG).show()
-            }
-        }
-         return true
-    }
     private fun selectImage(){
         ImagePicker.with(this)
             .crop()
@@ -134,13 +69,6 @@ class RegisterClass : AppCompatActivity() {
         }
         changePic.setOnClickListener{
             selectImage()
-        }
-        buttonRegister.setOnClickListener {
-            var check = register()
-            if (check) {
-                val goToLogin = Intent(this, Login::class.java)
-                startActivity(goToLogin)
-            }
         }
         val buttonBack = findViewById<Button>(R.id.backButton)
         buttonBack.setOnClickListener{
