@@ -7,6 +7,9 @@ plugins {
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
+    packagingOptions {
+        pickFirst  '**'
+    }
 
     defaultConfig {
         applicationId "com.fiit.notes"
