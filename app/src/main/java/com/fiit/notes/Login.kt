@@ -6,14 +6,18 @@ import android.os.StrictMode
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import org.springframework.http.*
-import org.springframework.web.client.HttpClientErrorException
-import org.springframework.web.client.RestTemplate
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONException
+import org.json.JSONObject
 
 
 class Login : AppCompatActivity() {
 
-    lateinit var name: com.google.android.material.textfield.TextInputEditText
+    lateinit var email: com.google.android.material.textfield.TextInputEditText
     lateinit var pass: com.google.android.material.textfield.TextInputEditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,14 +31,14 @@ class Login : AppCompatActivity() {
             val goToReg = Intent(this, RegisterClass:: class.java)
             startActivity(goToReg)
         }
-        name = findViewById(R.id.email_input)
+        email = findViewById(R.id.email_input)
         pass = findViewById(R.id.password_input)
         val loginButton = findViewById<Button>(R.id.login_button)
         loginButton.setOnClickListener(){
-            val username = name.text.toString()
+            val mail = email.text.toString()
             val password = pass.text.toString()
-            if (username.isEmpty()){
-                name.error = "Please enter username"
+            if (mail.isEmpty()){
+                email.error = "Please enter mail"
                 return@setOnClickListener
             }
 
@@ -42,21 +46,24 @@ class Login : AppCompatActivity() {
                 pass.error = "Please enter password"
                 return@setOnClickListener
             }
-            val url = "http://localhost:8080/api/v1/users/login"
-            val authHeader: HttpAuthentication = HttpBasicAuthentication(username, password)
-            val requestHeaders = HttpHeaders()
-            requestHeaders.setAuthorization(authHeader)
-            val requestEntity: HttpEntity<*> = HttpEntity<Any>(requestHeaders)
-            val restTemplate = RestTemplate()
+            val url = "http://10.0.2.2:8080/api/v1/users/login"
+            val queue = Volley.newRequestQueue(this)
+            val loginData = JSONObject()
             try {
-                // Make the HTTP GET request to the Basic Auth protected URL
-                val response: ResponseEntity<String>? = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String::class.java)
-                Toast.makeText(this, "Welcome in", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            } catch (e: HttpClientErrorException) {
-                Toast.makeText(this, "Unauthorized access", Toast.LENGTH_SHORT).show()
-                // Handle 401 Unauthorized response
+                loginData.put("email",mail )
+                loginData.put("password", password)
+            } catch (e: JSONException) {
+                e.printStackTrace()
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
             }
+            val jsonObjectRequest = JsonObjectRequest(Request.Method.POST, url, loginData, Response.Listener<JSONObject?>
+            { response -> Toast.makeText(this, "Welcome in", Toast.LENGTH_SHORT).show()
+                val goHome = Intent(this, Homepage:: class.java)
+                startActivity(goHome) },
+             Response.ErrorListener { error -> Toast.makeText(this, "Wrong email or password", Toast.LENGTH_SHORT).show() })
+
+            queue.add(jsonObjectRequest)
+
         }
     }
 }
