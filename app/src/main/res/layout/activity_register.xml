@@ -110,32 +110,45 @@
             android:inputType="textPassword"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:orientation="vertical"/>
-
-        <Button
-            android:id="@+id/buttonReg"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:background="#666666"
-            android:fontFamily="sans-serif"
-            android:text="Register"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center"
-            android:background="#666666"
-            android:fontFamily="sans-serif"
-            android:text="Go back"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+                <Button
+                    android:id="@+id/backButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#666666"
+                    android:fontFamily="sans-serif"
+                    android:text="Go back"
+                    android:layout_margin="10dp"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+                <Button
+                    android:id="@+id/buttonReg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#666666"
+                    android:fontFamily="sans-serif"
+                    android:text="Register"
+                    android:layout_margin="10dp"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>
