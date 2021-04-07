@@ -73,7 +73,7 @@
                 android:layout_margin="10dp"
                 android:padding="10dp"
                 android:id="@+id/from"
-                android:hint="MM/dd/yyyy"
+                android:hint="YYYY-MM-DD"
                 android:textSize="20sp" />
 
         </RelativeLayout>
@@ -110,7 +110,7 @@
                 android:layout_margin="10dp"
                 android:padding="10dp"
                 android:id="@+id/to"
-                android:hint="MM/dd/yyyy"
+                android:hint="YYYY-MM-DD"
                 android:textSize="20sp" />
 
         </RelativeLayout>

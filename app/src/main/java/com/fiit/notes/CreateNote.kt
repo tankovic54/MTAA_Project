@@ -14,9 +14,22 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONException
 import org.json.JSONObject
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE
+import java.time.format.DateTimeParseException
 
 class CreateNote: AppCompatActivity() {
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun isValidIsoDateTime(date: String?): Boolean {
+        return try {
+            DateTimeFormatter.ISO_DATE.parse(date)
+            true
+        } catch (e: DateTimeParseException) {
+            false
+        }
+    }
+
     var FavButton: Boolean = false
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,6 +87,16 @@ class CreateNote: AppCompatActivity() {
 
             if (datum_od.compareTo(datum_do) > 0){
                 od.error = "Incorrect date"
+                return@setOnClickListener
+            }
+
+            if (!isValidIsoDateTime(datum_od)){
+                od.error = "Please use YYYY-MM-DD format"
+                return@setOnClickListener
+            }
+
+            if (!isValidIsoDateTime(datum_do)){
+                platnost.error = "Please use YYYY-MM-DD format"
                 return@setOnClickListener
             }
 
