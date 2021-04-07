@@ -39,7 +39,8 @@
         android:clickable="true"
         android:layout_marginTop="10dp"
         android:hapticFeedbackEnabled="true"
-        app:cardCornerRadius="20dp"/>
+        app:cardCornerRadius="20dp"
+        android:focusable="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addNote"
@@ -50,7 +51,8 @@
         android:backgroundTint="#D9FA48"
         android:clickable="true"
         android:src="@drawable/ic_baseline_add_24"
-        app:backgroundTint="#000000"/>
+        app:backgroundTint="#000000"
+        android:focusable="true" />
 
 
 </LinearLayout>
