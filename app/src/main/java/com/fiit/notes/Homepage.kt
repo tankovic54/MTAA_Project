@@ -2,16 +2,15 @@ package com.fiit.notes
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import org.json.JSONException
-import org.json.JSONObject
-import org.w3c.dom.Text
 
 
 class Homepage : AppCompatActivity() {
@@ -40,8 +39,18 @@ class Homepage : AppCompatActivity() {
             startActivity(settingScreen)
         }
         val noteList = findViewById<ListView>(R.id.note_card)
-
+        val list: MutableList<String> = ArrayList()
         val url = "http://10.0.2.2:8080/api/v1/notes/$userID"
-        val jsonResponses: ArrayList<String> = ArrayList()
+        val queue = Volley.newRequestQueue(this)
+        val stringRequest = StringRequest(Request.Method.GET, url,
+        Response.Listener<String> { response ->
+            val answer = response.toString()
+            list.add(answer)
+            val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list)
+            noteList.adapter = arrayAdapter
+        },
+        Response.ErrorListener { Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
+
+        queue.add(stringRequest)
     }
 }
