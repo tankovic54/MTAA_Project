@@ -7,7 +7,7 @@
     tools:context=".Login"
     android:orientation="vertical"
     android:background="#fff"
-    android:padding="40dp"
+    android:padding="20dp"
     android:layout_marginTop="20dp"
     android:layout_marginBottom="20dp">
 
@@ -32,15 +32,14 @@
         android:textColor="@color/white"
         app:icon="@drawable/abc_vector_test"/>
 
-    <androidx.cardview.widget.CardView
+    <ListView
         android:id="@+id/note_card"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:clickable="true"
+        android:layout_height="486dp"
         android:layout_marginTop="10dp"
-        android:hapticFeedbackEnabled="true"
-        app:cardCornerRadius="20dp"
-        android:focusable="true" />
+        android:clickable="true"
+        android:focusable="true"
+        android:hapticFeedbackEnabled="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addNote"
@@ -50,9 +49,9 @@
         android:layout_margin="20dp"
         android:backgroundTint="#D9FA48"
         android:clickable="true"
+        android:focusable="true"
         android:src="@drawable/ic_baseline_add_24"
-        app:backgroundTint="#000000"
-        android:focusable="true" />
+        app:backgroundTint="#000000" />
 
 
 </LinearLayout>
