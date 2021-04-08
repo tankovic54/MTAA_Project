@@ -33,6 +33,8 @@ class CreateNote: AppCompatActivity() {
     var FavButton: Boolean = false
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
+        val bundle = intent.extras
+        val userID = bundle!!.getString("userID")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addnote)
 
@@ -102,22 +104,24 @@ class CreateNote: AppCompatActivity() {
 
             val url = "http://10.0.2.2:8080/api/v1/notes/newNote"
             val queue = Volley.newRequestQueue(this)
-            val loginData = JSONObject()
+            val noteData = JSONObject()
             try {
-                loginData.put("name",meno )
-                loginData.put("odkedy", datum_od)
-                loginData.put("dokedy", datum_do)
-                loginData.put("favourite", FavButton)
-                loginData.put("description", description)
+                noteData.put("note",meno )
+                noteData.put("description", description)
+                noteData.put("favourite", FavButton)
+                noteData.put("fromDate", datum_od)
+                noteData.put("toDate", datum_do)
+                noteData.put("user_id", userID)
             } catch (e: JSONException) {
                 e.printStackTrace()
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
             }
-            val jsonObjectRequest = JsonObjectRequest(Request.Method.POST, url, loginData, Response.Listener<JSONObject?>
+            val jsonObjectRequest = JsonObjectRequest(Request.Method.POST, url, noteData, Response.Listener<JSONObject?>
             { response -> Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show()
-                val goHome = Intent(this, Homepage:: class.java)
-                startActivity(goHome) },
-                    Response.ErrorListener { error -> Toast.makeText(this, "Required fields not filled", Toast.LENGTH_SHORT).show() })
+                val goToHomepage = Intent(this, Homepage:: class.java)
+                goToHomepage.putExtra("userID",userID)
+                startActivity(goToHomepage) },
+                    Response.ErrorListener { error -> Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
 
             queue.add(jsonObjectRequest)
         }

@@ -58,7 +58,10 @@ class Login : AppCompatActivity() {
             }
             val jsonObjectRequest = JsonObjectRequest(Request.Method.POST, url, loginData, Response.Listener<JSONObject?>
             { response -> Toast.makeText(this, "Welcome in", Toast.LENGTH_SHORT).show()
+                val response_string = response.toString()
+                val userID = response_string.substring(response_string.indexOf(":") + 1, response_string.indexOf(","))
                 val goHome = Intent(this, Homepage:: class.java)
+                goHome.putExtra("userID",userID)
                 startActivity(goHome) },
              Response.ErrorListener { error -> Toast.makeText(this, "Wrong email or password", Toast.LENGTH_SHORT).show() })
 
