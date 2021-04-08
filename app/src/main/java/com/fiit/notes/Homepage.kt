@@ -34,7 +34,7 @@ class Homepage : AppCompatActivity() {
         }
         val settingBtn = findViewById<Button>(R.id.settings)
         settingBtn.setOnClickListener {
-            val settingScreen = Intent(this, CreateNote:: class.java)
+            val settingScreen = Intent(this, settings:: class.java)
             settingScreen.putExtra("userID",userID)
             startActivity(settingScreen)
         }
