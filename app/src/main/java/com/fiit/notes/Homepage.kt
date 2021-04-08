@@ -33,6 +33,12 @@ class Homepage : AppCompatActivity() {
             createNote.putExtra("userID",userID)
             startActivity(createNote)
         }
+        val settingBtn = findViewById<Button>(R.id.settings)
+        settingBtn.setOnClickListener {
+            val settingScreen = Intent(this, CreateNote:: class.java)
+            settingScreen.putExtra("userID",userID)
+            startActivity(settingScreen)
+        }
         val noteList = findViewById<ListView>(R.id.note_card)
 
         val url = "http://10.0.2.2:8080/api/v1/notes/$userID"
