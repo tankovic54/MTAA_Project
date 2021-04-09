@@ -70,6 +70,13 @@
         android:layout_marginTop="10dp"
         android:text="Change Name" />
     <Button
+        android:id="@+id/delete_notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="10dp"
+        android:text="Delete All Notes" />
+    <Button
         android:id="@+id/delete_acc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
