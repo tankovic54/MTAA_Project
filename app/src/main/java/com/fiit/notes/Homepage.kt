@@ -11,6 +11,8 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import org.json.JSONArray
+import org.json.JSONObject
 
 
 class Homepage : AppCompatActivity() {
@@ -40,16 +42,27 @@ class Homepage : AppCompatActivity() {
         }
         val noteList = findViewById<ListView>(R.id.note_card)
         val list: MutableList<String> = ArrayList()
-        val url = "http://10.0.2.2:8080/api/v1/notes/$userID"
+        //val url = "http://10.0.2.2:8080/api/v1/notes/$userID"
+        val url = "http://10.0.2.2:8080/api/v1/notes/user/$userID"
         val queue = Volley.newRequestQueue(this)
         val stringRequest = StringRequest(Request.Method.GET, url,
-        Response.Listener<String> { response ->
-            val answer = response.toString()
-            list.add(answer)
-            val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list)
-            noteList.adapter = arrayAdapter
-        },
-        Response.ErrorListener { Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
+                { response ->
+                    val answer = response.toString()
+                    val pokus = answer
+                    System.out.println("aaaaaaaaaaaaaaaaaaaa")
+
+                    System.out.println(answer)
+
+                    val obj = JSONArray(pokus)
+                    val obj1 = JSONObject(obj[0].toString())
+                    System.out.println(obj1["note"])
+
+
+                    list.add(answer)
+                    val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list)
+                    noteList.adapter = arrayAdapter
+                },
+                { Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
 
         queue.add(stringRequest)
     }
