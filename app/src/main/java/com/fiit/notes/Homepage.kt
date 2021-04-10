@@ -65,11 +65,11 @@ class Homepage : AppCompatActivity() {
                 { Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
 
         queue.add(stringRequest)
-        noteList.setOnClickListener {
-            val editNote = Intent(this, CreateNote:: class.java)
-            editNote.putExtra("userID",userID)
-            startActivity(editNote)
-        }
+        //noteList.setOnItemClickListener {
+        //    val editNote = Intent(this, CreateNote:: class.java)
+        //    editNote.putExtra("userID",userID)
+        //    startActivity(editNote)
+        //}
 
     }
 }

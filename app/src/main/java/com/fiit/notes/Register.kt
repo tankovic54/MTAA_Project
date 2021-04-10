@@ -101,6 +101,10 @@ class RegisterClass : AppCompatActivity() {
                 confirmPassword.error = "Passwords do not match"
                 return@setOnClickListener
             }
+            if (password.length < 6 ){
+                pass.error = "Password has to have at least 6 characters"
+                return@setOnClickListener
+            }
             val url = "http://10.0.2.2:8080/api/v1/users/register"
             val queue = Volley.newRequestQueue(this)
             val registerData = JSONObject()
