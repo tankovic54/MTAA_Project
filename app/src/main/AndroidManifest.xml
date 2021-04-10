@@ -15,9 +15,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Notes">
-        <activity android:name=".updateName"></activity>
-        <activity android:name=".updateEmail" />
-        <activity android:name=".updatePassword" />
+        <activity android:name=".UpdateAccount" />
         <activity android:name=".settings" />
         <activity android:name=".Homepage" />
         <activity android:name=".RegisterClass" />

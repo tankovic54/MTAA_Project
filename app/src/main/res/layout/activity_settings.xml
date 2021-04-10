@@ -49,26 +49,12 @@
         android:layout_marginTop="10dp"
         android:text="Change Image" />
     <Button
-        android:id="@+id/change_password_settings"
+        android:id="@+id/change_details_settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginTop="10dp"
-        android:text="Change Password" />
-    <Button
-        android:id="@+id/change_email_settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginTop="10dp"
-        android:text="Change Email" />
-    <Button
-        android:id="@+id/change_name_settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginTop="10dp"
-        android:text="Change Name" />
+        android:text="Change Account Details" />
     <Button
         android:id="@+id/delete_notes"
         android:layout_width="match_parent"

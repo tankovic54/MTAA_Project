@@ -18,9 +18,7 @@ class settings : AppCompatActivity() {
     lateinit var signout: Button
     lateinit var deletenotes : Button
     lateinit var deleteacc: Button
-    lateinit var changePass: Button
-    lateinit var changeEmail: Button
-    lateinit var changeName: Button
+    lateinit var changeDetails: Button
     lateinit var changePicture: Button
     var fileUri : Uri? = null
 
@@ -97,26 +95,18 @@ class settings : AppCompatActivity() {
             startActivity(goLog)
         }
 
-        profilePic = findViewById<ImageView>(R.id.profile_picture)
+        profilePic = findViewById(R.id.profile_picture)
 
-        displayName = findViewById<TextView>(R.id.displayname)
+        displayName = findViewById(R.id.displayname)
 
-        changePass = findViewById(R.id.change_password_settings)
+        changeDetails = findViewById(R.id.change_details_settings)
 
-        changePass.setOnClickListener {
-            val password = Intent(this, updatePassword::class.java)
-            startActivity(password)
+        changeDetails.setOnClickListener {
+            val details = Intent(this, UpdateAccount::class.java)
+            details.putExtra("userID",userID)
+            startActivity(details)
         }
-        changeEmail = findViewById(R.id.change_email_settings)
-        changeEmail.setOnClickListener {
-            val changeName = Intent(this, updateEmail::class.java)
-            startActivity(changeName)
-        }
-        changeName = findViewById(R.id.change_name_settings)
-        changeName.setOnClickListener {
-            val changeName = Intent(this, updateName::class.java)
-            startActivity(changeName)
-        }
+
         changePicture = findViewById(R.id.change_picture_settings)
         changePicture.setOnClickListener {
             selectImage()
