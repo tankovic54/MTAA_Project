@@ -12,6 +12,16 @@
     android:layout_marginBottom="20dp">
 
     <TextView
+        android:id="@+id/placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Account"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="40sp"/>
+
+    <TextView
         android:id="@+id/changePassText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

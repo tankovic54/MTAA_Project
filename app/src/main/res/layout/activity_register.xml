@@ -7,7 +7,7 @@
     tools:context=".Login"
     android:orientation="vertical"
     android:background="@color/white"
-    android:padding="20dp">
+    android:padding="15dp">
 
 
     <TextView
@@ -18,7 +18,7 @@
         android:textStyle="bold"
         android:text="Register now"
         android:layout_marginTop="20dp"
-        android:textSize="28sp"/>
+        android:textSize="40sp"/>
 
     <ImageView
         android:id="@+id/profile_picture"
@@ -74,7 +74,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:layout_marginBottom="15dp"
             android:orientation="vertical" />
 
         <com.google.android.material.textview.MaterialTextView

@@ -8,7 +8,6 @@
     android:orientation="vertical"
     android:background="#fff"
     android:padding="20dp"
-    android:layout_marginTop="20dp"
     android:layout_marginBottom="20dp">
 
     <TextView
@@ -64,6 +63,13 @@
         android:focusable="true"
         android:src="@drawable/ic_baseline_add_24"
         app:backgroundTint="#000000" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Favourite"
+        app:icon="@android:drawable/btn_star"
+        android:id="@+id/home_fav_button"/>
 
 
 </LinearLayout>

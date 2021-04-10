@@ -13,8 +13,9 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.Notes">
+        android:theme="@style/Theme.Notes"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Favourite_notes"></activity>
         <activity android:name=".UpdateAccount" />
         <activity android:name=".settings" />
         <activity android:name=".Homepage" />
