@@ -7,7 +7,8 @@
     tools:context=".Login"
     android:orientation="vertical"
     android:background="@color/white"
-    android:padding="20dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
     android:layout_marginBottom="20dp">
 
 
@@ -17,14 +18,16 @@
         android:layout_height="wrap_content"
         android:text="NOTES"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/teal_200"
         android:textSize="40sp"/>
     <TextView
         android:id="@+id/slogan_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="Sign in"
-        android:textColor="@color/black"
+        android:textColor="@color/teal_200"
         android:textStyle="bold"
         android:textSize="28sp"/>
 
@@ -40,7 +43,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/username"
             android:hint="Email"
-            android:textColorHint="@color/black"
+            android:textColorHint="@color/teal_200"
             android:textSize="18sp"
             android:orientation="vertical"/>
 
@@ -50,6 +53,9 @@
             android:id="@+id/email_input"
             android:layout_marginBottom="5dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/teal_200"
+            android:textColorHint="@color/teal_200"
+            android:hint="Enter email"
             android:orientation="vertical"/>
 
         <com.google.android.material.textview.MaterialTextView
@@ -59,7 +65,7 @@
             android:layout_marginTop="15dp"
             android:textSize="18sp"
             android:hint="Password"
-            android:textColorHint="@color/black"
+            android:textColorHint="@color/teal_200"
             android:orientation="vertical"/>
 
         <com.google.android.material.textfield.TextInputEditText
@@ -69,19 +75,21 @@
             android:id="@+id/password_input"
             android:layout_marginBottom="5dp"
             app:passwordToggleEnabled="true"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:textColorHint="@color/teal_200"
+            android:hint="Enter password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:orientation="vertical"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#000000"
+            android:background="@color/teal_200"
             android:layout_marginTop="15dp"
             android:id="@+id/login_button"
             android:text="Login"
+            app:backgroundTint="@color/teal_200"
             android:layout_gravity="center"
-            android:textAllCaps="false"
-            android:textColor="@color/white" />
+            android:textAllCaps="false"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,7 +99,7 @@
             android:text="Register Now"
             android:layout_gravity="center"
             android:textAllCaps="false"
-            android:textColor="@color/black" />
+            android:textColor="@color/teal_200" />
 
     </LinearLayout>
 

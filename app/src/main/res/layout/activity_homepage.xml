@@ -7,7 +7,8 @@
     tools:context=".Login"
     android:orientation="vertical"
     android:background="#fff"
-    android:padding="20dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
     android:layout_marginBottom="20dp">
 
     <TextView
@@ -15,7 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Home"
-        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/teal_200"
         android:textStyle="bold"
         android:textSize="40sp"/>
 
@@ -26,9 +28,9 @@
         android:layout_gravity="left"
         android:layout_marginTop="15dp"
         android:background="#000000"
+        app:backgroundTint="@color/teal_200"
         android:text="Back"
         android:textAllCaps="false"
-        android:textColor="@color/white"
         app:icon="@drawable/abc_vector_test"/>
 
     <Button
@@ -39,8 +41,8 @@
         android:layout_marginTop="15dp"
         android:background="#000000"
         android:text="Settings"
+        app:backgroundTint="@color/teal_200"
         android:textAllCaps="false"
-        android:textColor="@color/white"
         app:icon="@android:drawable/ic_menu_preferences" />
 
     <ListView
@@ -58,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
-        android:backgroundTint="#D9FA48"
+        android:backgroundTint="@color/teal_200"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_baseline_add_24"
@@ -68,6 +70,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Favourite"
+        app:backgroundTint="@color/teal_200"
+        android:background="#000000"
         app:icon="@android:drawable/btn_star"
         android:id="@+id/home_fav_button"/>
 
