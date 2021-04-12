@@ -126,6 +126,7 @@
         android:layout_marginStart="25dp"
         android:textStyle="bold"
         android:textAllCaps="false"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:text="Favourite"/>
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/noteText"

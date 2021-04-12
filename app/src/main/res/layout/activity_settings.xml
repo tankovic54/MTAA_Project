@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Login"
     android:orientation="vertical"
     android:background="@color/white"
@@ -34,6 +35,37 @@
         android:textColor="@color/black"
         android:text="Sample username"
         android:textSize="25sp"/>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/theme_picker"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        android:layout_gravity="center">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/system"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:text="System" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/light_mode"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:text="Light" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dark_mode"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:text="Dark" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
     <Button
         android:id="@+id/backbutton_settings"
         android:layout_width="match_parent"

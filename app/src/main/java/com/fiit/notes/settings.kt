@@ -3,14 +3,21 @@ package com.fiit.notes
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDialog
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class settings : AppCompatActivity() {
     lateinit var displayName: TextView
@@ -20,6 +27,7 @@ class settings : AppCompatActivity() {
     lateinit var deleteacc: Button
     lateinit var changeDetails: Button
     lateinit var changePicture: Button
+    lateinit var darkModeToggle : com.google.android.material.button.MaterialButtonToggleGroup
     var fileUri : Uri? = null
 
     private fun selectImage(){
@@ -115,6 +123,17 @@ class settings : AppCompatActivity() {
             }
             val goBack = Intent(this, settings::class.java)
             startActivity(goBack)
+        }
+        darkModeToggle = findViewById(R.id.theme_picker)
+        darkModeToggle.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            if (isChecked){
+                val theme = when(checkedId){
+                    R.id.system -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                    R.id.dark_mode -> AppCompatDelegate.MODE_NIGHT_YES
+                    else -> AppCompatDelegate.MODE_NIGHT_NO
+                }
+                AppCompatDelegate.setDefaultNightMode(theme)
+            }
         }
 
     }
