@@ -83,7 +83,6 @@ class CreateNote: AppCompatActivity() {
                 platnost.setText(platnostHelp)
                 val textHelp = obj1["description"].toString()
                 textNote.setText(textHelp)
-                //System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
             },
                     {Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
             queueH.add(stringRequest)
@@ -180,9 +179,23 @@ class CreateNote: AppCompatActivity() {
 
                 queue.add(jsonObjectRequest)
             }
-
         }
 
+        val deleteButton = findViewById<Button>(R.id.deleteNote)
+        deleteButton.setOnClickListener {
+            val urlDelete = "http://10.0.2.2:8080/api/v1/notes/$noteID"
+            val deleteQueue = Volley.newRequestQueue(this)
+            val deleteRequest = StringRequest(Request.Method.DELETE, urlDelete,
+                    Response.Listener<String> { response ->
+                        Toast.makeText(this, "Note deleted", Toast.LENGTH_SHORT).show()
+                        val goHome = Intent(this, Homepage::class.java)
+                        goHome.putExtra("userID",userID)
+                        startActivity(goHome)
+                    },
+                    Response.ErrorListener {
+                        Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show()
+                    })
+            deleteQueue.add(deleteRequest)
+        }
     }
-
 }

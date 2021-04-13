@@ -17,6 +17,7 @@ class Favourite_notes : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val bundle = intent.extras
         val userID = bundle!!.getString("userID")
+        var emptyList = false
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favourite_notes)
 
@@ -27,6 +28,8 @@ class Favourite_notes : AppCompatActivity() {
             startActivity(home)
         }
         val noteList = findViewById<ListView>(R.id.fav_notes_list)
+        var listID: MutableList<String> = ArrayList()
+        var arrayAdapter: ArrayAdapter<String>? = null
         val list: MutableList<String> = ArrayList()
         val url = "http://10.0.2.2:8080/api/v1/notes/user/$userID"
         val queue = Volley.newRequestQueue(this)
@@ -40,20 +43,39 @@ class Favourite_notes : AppCompatActivity() {
                             val obj1 = JSONObject(obj[index].toString())
                             val favObj =  obj1["favourite"].toString()
                             val noteName = obj1["note"].toString()
+                            val noteID = obj1["id"].toString()
                             if (favObj == "true"){
                                 list.add(noteName)
+                                listID.add(noteID)
                             }
                         }
                     }
                     if (list.isEmpty()){
                         val emptyNotes = "No favourite notes"
                         list.add(emptyNotes)
+                        emptyList = true
                     }
-                    val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list)
+                    arrayAdapter= ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list)
                     noteList.adapter = arrayAdapter
                 },
                 { Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
 
         queue.add(stringRequest)
+
+        noteList.setOnItemClickListener { parent, view, position, id ->
+            if (!emptyList) {
+                val element = arrayAdapter?.getItem(position) // The item that was clicked
+                val noteID = listID.get(position)
+                val intent = Intent(this, CreateNote::class.java)
+                intent.putExtra("userID", userID)
+                intent.putExtra("noteID", noteID)
+                startActivity(intent)
+            }
+            else{
+                Toast.makeText(this, "Create some note", Toast.LENGTH_SHORT).show()
+                return@setOnItemClickListener
+            }
+
+        }
     }
 }

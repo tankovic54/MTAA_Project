@@ -15,6 +15,7 @@ class Homepage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val bundle = intent.extras
         val userID = bundle!!.getString("userID")
+        var emptyList = false
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_homepage)
@@ -59,6 +60,7 @@ class Homepage : AppCompatActivity() {
                     else{
                         val emptyNotes = "Add some notes"
                         list.add(emptyNotes)
+                        emptyList = true
                     }
                     arrayAdapter= ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list)
                     noteList.adapter = arrayAdapter
@@ -74,37 +76,20 @@ class Homepage : AppCompatActivity() {
             startActivity(favNotes)
         }
 
-        //val arrayAdapter: ArrayAdapter<String> = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list)
-        //noteList.adapter = arrayAdapter
-
         noteList.setOnItemClickListener { parent, view, position, id ->
-            val element = arrayAdapter?.getItem(position) // The item that was clicked
-            val noteID = listID.get(position)
-            System.out.println("KLIKNUTE")
-            System.out.println(noteID)
-
-            val intent = Intent(this, CreateNote::class.java)
-            intent.putExtra("userID",userID)
-            intent.putExtra("noteID",noteID)
-            startActivity(intent)
+            if (!emptyList) {
+                val element = arrayAdapter?.getItem(position) // The item that was clicked
+                val noteID = listID.get(position)
+                val intent = Intent(this, CreateNote::class.java)
+                intent.putExtra("userID", userID)
+                intent.putExtra("noteID", noteID)
+                startActivity(intent)
+            }
+            else{
+                Toast.makeText(this, "Create some note", Toast.LENGTH_SHORT).show()
+                return@setOnItemClickListener
+            }
 
         }
-
-        /*noteList.setOnItemClickListener( AdapterView.OnItemClickListener {
-            @Override
-             fun onItemClick(){
-
-            }
-        })*/
-
-        //noteList.onItemClickListener
-
-        /*noteList.setOnItemClickListener {
-            //System.out.println("KLIK NA ITEM")
-            val editNote = Intent(this, CreateNote:: class.java)
-            editNote.putExtra("userID",userID)
-            startActivity(editNote)
-        }*/
-
     }
 }
