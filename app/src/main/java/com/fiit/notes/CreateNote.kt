@@ -35,12 +35,17 @@ class CreateNote: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val bundle = intent.extras
         val userID = bundle!!.getString("userID")
+        if(bundle.containsKey("noteID")){
+            val noteID = bundle.getString("noteID")
+        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addnote)
 
         val cancelBtn = findViewById<Button>(R.id.cancelBtn)
         cancelBtn.setOnClickListener{
             val goToHomepage = Intent(this, Homepage:: class.java)
+            goToHomepage.putExtra("userID",userID)
             startActivity(goToHomepage)
         }
         val favourite = findViewById<Button>(R.id.favourite_button)
