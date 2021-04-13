@@ -38,6 +38,7 @@ class Homepage : AppCompatActivity() {
         }
         val noteList = findViewById<ListView>(R.id.note_card)
         val list: MutableList<String> = ArrayList()
+        var listID: MutableList<String> = ArrayList()
         val url = "http://10.0.2.2:8080/api/v1/notes/user/$userID"
         val queue = Volley.newRequestQueue(this)
         var arrayAdapter: ArrayAdapter<String>? = null
@@ -50,7 +51,8 @@ class Homepage : AppCompatActivity() {
                         for (index: Int in 0..pocetPoznamok){
                             val obj1 = JSONObject(obj[index].toString())
                             val noteName = obj1["note"].toString()
-
+                            val noteID = obj1["id"].toString()
+                            listID.add(noteID)
                             list.add(noteName)
                         }
                     }
@@ -77,11 +79,13 @@ class Homepage : AppCompatActivity() {
 
         noteList.setOnItemClickListener { parent, view, position, id ->
             val element = arrayAdapter?.getItem(position) // The item that was clicked
+            val noteID = listID.get(position)
             System.out.println("KLIKNUTE")
-            System.out.println(position)
+            System.out.println(noteID)
+
             val intent = Intent(this, CreateNote::class.java)
             intent.putExtra("userID",userID)
-            intent.putExtra("noteID",position)
+            intent.putExtra("noteID",noteID)
             startActivity(intent)
 
         }
