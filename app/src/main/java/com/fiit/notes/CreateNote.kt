@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONException
 import org.json.JSONObject
@@ -34,9 +36,12 @@ class CreateNote: AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         val bundle = intent.extras
+        var noteIDexists = false
+        var noteID: String? = null
         val userID = bundle!!.getString("userID")
         if(bundle.containsKey("noteID")){
-            val noteID = bundle.getString("noteID")
+            noteID = bundle.getString("noteID")
+            noteIDexists = true
         }
 
         super.onCreate(savedInstanceState)
@@ -59,11 +64,39 @@ class CreateNote: AppCompatActivity() {
         val platnost = findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.to)
         val textNote = findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.noteText)
         val saveNote = findViewById<Button>(R.id.saveBtn)
+        if(noteIDexists == true){
+            /*val xx = "hahaha"
+            note_name.setText(xx)*/
+            val urlGetNote = "http://10.0.2.2:8080/api/v1/notes/$noteID"
+            val queueH = Volley.newRequestQueue(this)
+            val stringRequest = StringRequest(Request.Method.GET, urlGetNote,{
+                response ->
+
+                val answer = response.toString()
+                val obj1 = JSONObject(answer)
+
+                val nameHelp = obj1["note"].toString()
+                note_name.setText(nameHelp)
+                val odHelp = obj1["fromDate"].toString()
+                od.setText(odHelp)
+                val platnostHelp = obj1["toDate"].toString()
+                platnost.setText(platnostHelp)
+                val textHelp = obj1["description"].toString()
+                textNote.setText(textHelp)
+                //System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+            },
+                    {Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
+            queueH.add(stringRequest)
+
+        }
         saveNote.setOnClickListener {
             val meno = note_name.text.toString()
             val description = textNote.text.toString()
             val datum_od = od.text.toString()
             val datum_do = platnost.text.toString()
+
+
+
 
             if (meno.isEmpty()){
                 note_name.error = "Please enter note name"
