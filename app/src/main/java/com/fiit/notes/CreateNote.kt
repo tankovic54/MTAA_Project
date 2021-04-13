@@ -150,18 +150,37 @@ class CreateNote: AppCompatActivity() {
                 noteData.put("fromDate", datum_od)
                 noteData.put("toDate", datum_do)
                 noteData.put("user_id", userID)
+                if(noteIDexists == true){
+                    noteData.put("id",noteID)
+                }
             } catch (e: JSONException) {
                 e.printStackTrace()
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
             }
-            val jsonObjectRequest = JsonObjectRequest(Request.Method.POST, url, noteData, Response.Listener<JSONObject?>
-            { response -> Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show()
-                val goToHomepage = Intent(this, Homepage:: class.java)
-                goToHomepage.putExtra("userID",userID)
-                startActivity(goToHomepage) },
-                    Response.ErrorListener { error -> Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
 
-            queue.add(jsonObjectRequest)
+            if(noteIDexists == true){
+                val urlUpdate = "http://10.0.2.2:8080/api/v1/notes/$noteID"
+                val jsonObjectRequest = JsonObjectRequest(Request.Method.PUT, urlUpdate, noteData, Response.Listener<JSONObject?>{
+                    response ->
+                    System.out.println("UPDATE NOTE")
+                    Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show()
+                    val goToHomepage = Intent(this, Homepage:: class.java)
+                    goToHomepage.putExtra("userID",userID)
+                    startActivity(goToHomepage)
+                },Response.ErrorListener { error -> Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() } )
+                queue.add(jsonObjectRequest)
+
+            }else{
+                val jsonObjectRequest = JsonObjectRequest(Request.Method.POST, url, noteData, Response.Listener<JSONObject?>
+                { response -> Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show()
+                    val goToHomepage = Intent(this, Homepage:: class.java)
+                    goToHomepage.putExtra("userID",userID)
+                    startActivity(goToHomepage) },
+                        Response.ErrorListener { error -> Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
+
+                queue.add(jsonObjectRequest)
+            }
+
         }
 
     }
