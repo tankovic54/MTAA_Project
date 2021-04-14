@@ -75,6 +75,17 @@ class Homepage : AppCompatActivity() {
             favNotes.putExtra("userID",userID)
             startActivity(favNotes)
         }
+        val searchbar = findViewById<androidx.appcompat.widget.SearchView>(R.id.home_search)
+        searchbar.setOnQueryTextListener(object: androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                arrayAdapter?.filter?.filter(query)
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                arrayAdapter?.filter?.filter(newText)
+                return false
+            }
+        })
 
         noteList.setOnItemClickListener { parent, view, position, id ->
             if (!emptyList) {
