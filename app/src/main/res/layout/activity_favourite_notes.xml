@@ -21,6 +21,16 @@
         android:textStyle="bold"
         android:textSize="40sp"/>
 
+    <Button
+        android:id="@+id/favHomeButton"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginTop="4dp"
+        android:textAllCaps="false"
+        app:icon="@drawable/abc_vector_test" />
+
     <ListView
         android:id="@+id/fav_notes_list"
         android:layout_width="match_parent"
@@ -29,17 +39,5 @@
         android:clickable="true"
         android:focusable="true"
         android:hapticFeedbackEnabled="true" />
-
-    <Button
-        android:id="@+id/favHomeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:layout_marginTop="15dp"
-        android:background="#000000"
-        android:text="Back"
-        android:textAllCaps="false"
-        app:backgroundTint="@color/teal_200"
-        app:icon="@drawable/abc_vector_test" />
 
 </LinearLayout>

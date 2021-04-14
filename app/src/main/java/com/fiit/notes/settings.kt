@@ -18,6 +18,8 @@ import com.android.volley.toolbox.Volley
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.switchmaterial.SwitchMaterial
+import org.json.JSONArray
+import org.json.JSONObject
 
 class settings : AppCompatActivity() {
     lateinit var displayName: TextView
@@ -59,6 +61,18 @@ class settings : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
+        displayName = findViewById(R.id.displayname)
+        val nameUrl = "http://10.0.2.2:8080/api/v1/users/$userID"
+        val nameQueue = Volley.newRequestQueue(this)
+        val stringRequest = StringRequest(Request.Method.GET, nameUrl,
+                { response ->
+                    val answer = response.toString()
+                    val obj = JSONObject(answer)
+                    displayName.text = "Hello " + obj["name"].toString()
+                },
+                { Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
+        nameQueue.add(stringRequest)
 
         val backButton = findViewById<Button>(R.id.backbutton_settings)
         backButton.setOnClickListener {

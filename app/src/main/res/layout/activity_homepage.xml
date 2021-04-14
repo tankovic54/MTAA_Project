@@ -28,8 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:layout_marginTop="4dp"
-        android:textAllCaps="false"
-        app:icon="@drawable/abc_vector_test" />
+        app:icon="?attr/homeAsUpIndicator"
+        app:iconTint="@color/teal_200" />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/home_search"
@@ -50,7 +50,8 @@
         android:text="Settings"
         android:textAllCaps="false"
         app:backgroundTint="@color/teal_200"
-        app:icon="@android:drawable/ic_menu_preferences" />
+        app:icon="@android:drawable/ic_menu_preferences"
+        app:iconTint="@color/black" />
 
     <ListView
         android:id="@+id/note_card"
