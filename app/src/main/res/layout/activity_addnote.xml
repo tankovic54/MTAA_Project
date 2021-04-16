@@ -144,8 +144,9 @@
                 android:layout_margin="10dp"
                 android:layout_gravity="left"
                 android:textSize="16sp"
+                app:backgroundTint="@color/teal_200"
+                android:background="#000000"
                 android:layout_marginStart="25dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:text="Favourite"/>
         </RelativeLayout>
         <RelativeLayout
@@ -158,15 +159,19 @@
                 android:id="@+id/deleteNote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="#000000"
                 android:gravity="right"
                 android:text="Delete"
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:icon="@android:drawable/ic_delete" />
+                app:backgroundTint="@color/teal_200"
+                app:icon="@android:drawable/ic_menu_delete"
+                app:iconTint="#000000" />
 
         </RelativeLayout>
 
@@ -197,6 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="Cancel"
+                app:backgroundTint="@color/teal_200"
                 android:background="#000000"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
@@ -206,16 +212,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2">
+
             <Button
                 android:id="@+id/saveBtn"
-                android:textAllCaps="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textSize="16sp"
-                android:text="Save"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="#000000"
-                android:textStyle="bold"/>
+                android:text="Save"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/teal_200"
+                app:icon="@android:drawable/ic_menu_save"
+                app:iconTint="#000000" />
 
         </RelativeLayout>
     </LinearLayout>

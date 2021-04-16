@@ -29,6 +29,7 @@ class settings : AppCompatActivity() {
     lateinit var deleteacc: Button
     lateinit var changeDetails: Button
     lateinit var changePicture: Button
+    lateinit var backBtn : Button
     lateinit var darkModeToggle : com.google.android.material.button.MaterialButtonToggleGroup
     var fileUri : Uri? = null
 
@@ -148,6 +149,12 @@ class settings : AppCompatActivity() {
                 }
                 AppCompatDelegate.setDefaultNightMode(theme)
             }
+        }
+        backBtn = findViewById(R.id.backbutton_settings)
+        backBtn.setOnClickListener {
+            val goToHomepage = Intent(this, Homepage:: class.java)
+            goToHomepage.putExtra("userID",userID)
+            startActivity(goToHomepage)
         }
 
     }
