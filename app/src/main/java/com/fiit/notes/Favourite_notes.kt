@@ -28,7 +28,7 @@ class Favourite_notes : AppCompatActivity() {
             startActivity(home)
         }
         val noteList = findViewById<ListView>(R.id.fav_notes_list)
-        var listID: MutableList<String> = ArrayList()
+        val listID: MutableList<String> = ArrayList()
         var arrayAdapter: ArrayAdapter<String>? = null
         val list: MutableList<String> = ArrayList()
         val url = "http://10.0.2.2:8080/api/v1/notes/user/$userID"

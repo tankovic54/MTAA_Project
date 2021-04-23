@@ -64,7 +64,7 @@ class CreateNote: AppCompatActivity() {
         val platnost = findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.to)
         val textNote = findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.noteText)
         val saveNote = findViewById<Button>(R.id.saveBtn)
-        if(noteIDexists == true){
+        if(noteIDexists){
             /*val xx = "hahaha"
             note_name.setText(xx)*/
             val urlGetNote = "http://10.0.2.2:8080/api/v1/notes/$noteID"

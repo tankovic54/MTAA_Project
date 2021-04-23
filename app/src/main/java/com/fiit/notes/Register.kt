@@ -1,11 +1,11 @@
 package com.fiit.notes
 
 import android.content.Intent
+import android.content.Intent.ACTION_GET_CONTENT
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.util.Base64
 import android.util.Patterns
 import android.widget.Button
 import android.widget.ImageView
@@ -14,13 +14,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
+import java.net.URL
 
 class RegisterClass : AppCompatActivity() {
     lateinit var username: TextInputEditText
@@ -42,53 +42,63 @@ class RegisterClass : AppCompatActivity() {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    private fun selectImage(){
-        ImagePicker.with(this)
-                .crop()
-                .compress(1024)
-                .maxResultSize(1080, 1080)
-                .start()
+//    private fun selectImage(){
+//        ImagePicker.with(this)
+////                .crop()
+////                .compress(1024)
+////                .maxResultSize(1080, 1080)
+//                .start()
+//    }
+
+    private fun chooseFile(){
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1)
     }
 
-//    private fun chooseFile(){
-//        val intent = Intent()
-//        intent.type = "image/*"
-//        intent.action = ACTION_GET_CONTENT
-//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1)
-//    }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (resultCode == RESULT_OK && requestCode == 1 && data != null) {
-//            fileUri = data.data
-//            profilePicture.setImageURI(fileUri)
-//            bm = (profilePicture.drawable as BitmapDrawable).bitmap
-//            //bm = BitmapFactory.decodeFile(fileUri.toString())
-//            bm.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOS)
-//            byteArray = byteArrayOS.toByteArray()
-//            encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT)
-//        }
-//    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when (resultCode){
-            RESULT_OK -> {
-                fileUri = data?.data
-                bm = BitmapFactory.decodeStream(fileUri?.let { contentResolver.openInputStream(it) });
-                bm.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOS)
-                byteArray = byteArrayOS!!.toByteArray()
-                encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT)
-                profilePicture.setImageBitmap(bm)
-            }
-            ImagePicker.RESULT_ERROR ->{
-                Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
-            }
-            else -> {
-                Toast.makeText(this, "Task cancelled", Toast.LENGTH_SHORT).show()
-            }
+        if (resultCode == RESULT_OK && data != null && data.data != null) {
+            var os: ByteArrayOutputStream? = null
+            fileUri = data.data
+            bm = BitmapFactory.decodeStream(fileUri?.let { contentResolver.openInputStream(it) })
+            bm.compress(Bitmap.CompressFormat.PNG, 100, os)
+            Toast.makeText(this, bm.toString(), Toast.LENGTH_LONG).show()
+//            //bm = BitmapFactory.decodeStream(fileUri?.let { contentResolver.openInputStream(it) })
+//            bm.compress(Bitmap.CompressFormat.PNG, 100, os)
+
+            //profilePicture.setImageBitmap(bm)
+//            //profilePicture.setImageURI(fileUri)
+//            bm = BitmapFactory.decodeStream(fileUri?.let { contentResolver.openInputStream(it) });
+//            bm.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOS)
+//            //bm = (profilePicture.drawable as BitmapDrawable).bitmap
+//            //bm = BitmapFactory.decodeFile(fileUri.toString())
+//            //bm.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOS)
+//            byteArray = byteArrayOS!!.toByteArray()
+//            encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT)
         }
     }
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+//        super.onActivityResult(requestCode, resultCode, data)
+//        when (resultCode){
+//            RESULT_OK -> {
+//                fileUri = data?.data
+//                bm = BitmapFactory.decodeStream(fileUri?.let { contentResolver.openInputStream(it) });
+//                bm.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOS)
+//                byteArray = byteArrayOS!!.toByteArray()
+//                encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT)
+//                profilePicture.setImageBitmap(bm)
+//            }
+//            ImagePicker.RESULT_ERROR ->{
+//                Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+//            }
+//            else -> {
+//                Toast.makeText(this, "Task cancelled", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,8 +114,8 @@ class RegisterClass : AppCompatActivity() {
         storageRef = FirebaseStorage.getInstance().reference.child("User Images")
 
         changePic.setOnClickListener{
-            selectImage()
-            //chooseFile()
+            //selectImage()
+            chooseFile()
         }
 
         val buttonBack = findViewById<Button>(R.id.backButton)
