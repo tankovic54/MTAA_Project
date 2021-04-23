@@ -1,15 +1,10 @@
 package com.fiit.notes
 
 import android.content.Intent
-import android.content.Intent.ACTION_GET_CONTENT
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Base64
 import android.util.Patterns
 import android.widget.Button
@@ -26,7 +21,6 @@ import com.google.firebase.storage.StorageReference
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
-import java.io.FileInputStream
 
 class RegisterClass : AppCompatActivity() {
     lateinit var username: TextInputEditText
@@ -81,14 +75,11 @@ class RegisterClass : AppCompatActivity() {
         when (resultCode){
             RESULT_OK -> {
                 fileUri = data?.data
-                //profilePicture.setImageURI(fileUri)
-                //bm = (profilePicture.drawable as BitmapDrawable).bitmap
-                bm = BitmapFactory.decodeFile(fileUri.toString())
+                bm = BitmapFactory.decodeStream(fileUri?.let { contentResolver.openInputStream(it) });
                 bm.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOS)
                 byteArray = byteArrayOS!!.toByteArray()
                 encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT)
-                profilePicture.setImageURI(fileUri)
-                //profilePicture.setImageURI(fileUri)
+                profilePicture.setImageBitmap(bm)
             }
             ImagePicker.RESULT_ERROR ->{
                 Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
