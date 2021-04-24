@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -42,13 +43,13 @@ class RegisterClass : AppCompatActivity() {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-//    private fun selectImage(){
-//        ImagePicker.with(this)
-////                .crop()
-////                .compress(1024)
-////                .maxResultSize(1080, 1080)
-//                .start()
-//    }
+  private fun selectImage(){
+      ImagePicker.with(this)
+                .crop()
+                .compress(1024)
+                .maxResultSize(1080, 1080)
+              .start()
+  }
 
     private fun chooseFile(){
         val intent = Intent()
@@ -64,7 +65,6 @@ class RegisterClass : AppCompatActivity() {
             fileUri = data.data
             bm = BitmapFactory.decodeStream(fileUri?.let { contentResolver.openInputStream(it) })
             bm.compress(Bitmap.CompressFormat.PNG, 100, os)
-            Toast.makeText(this, bm.toString(), Toast.LENGTH_LONG).show()
 //            //bm = BitmapFactory.decodeStream(fileUri?.let { contentResolver.openInputStream(it) })
 //            bm.compress(Bitmap.CompressFormat.PNG, 100, os)
 
@@ -114,8 +114,9 @@ class RegisterClass : AppCompatActivity() {
         storageRef = FirebaseStorage.getInstance().reference.child("User Images")
 
         changePic.setOnClickListener{
-            //selectImage()
-            chooseFile()
+            selectImage()
+            profilePicture.setImageURI(fileUri)
+            //chooseFile()
         }
 
         val buttonBack = findViewById<Button>(R.id.backButton)
