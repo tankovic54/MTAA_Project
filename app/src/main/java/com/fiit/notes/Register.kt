@@ -60,7 +60,7 @@ class RegisterClass : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && data != null && data.data != null) {
-            var os: ByteArrayOutputStream? = null
+            val os: ByteArrayOutputStream? = null
             fileUri = data.data
             bm = BitmapFactory.decodeStream(fileUri?.let { contentResolver.openInputStream(it) })
             bm.compress(Bitmap.CompressFormat.PNG, 100, os)
@@ -131,6 +131,10 @@ class RegisterClass : AppCompatActivity() {
 
             if (mail.isEmpty()){
                 email.error = "Please enter mail"
+                return@setOnClickListener
+            }
+            if (!isEmailValid(mail)){
+                email.error = "Invalid email"
                 return@setOnClickListener
             }
 
