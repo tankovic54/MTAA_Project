@@ -37,6 +37,12 @@ class Homepage : AppCompatActivity() {
             settingScreen.putExtra("userID",userID)
             startActivity(settingScreen)
         }
+        val calendarBtn = findViewById<Button>(R.id.calendar)
+        calendarBtn.setOnClickListener {
+            val calendarScreen = Intent(this, Calendar:: class.java)
+            calendarScreen.putExtra("userID",userID)
+            startActivity(calendarScreen)
+        }
         val noteList = findViewById<ListView>(R.id.note_card)
         val list: MutableList<String> = ArrayList()
         var listID: MutableList<String> = ArrayList()

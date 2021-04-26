@@ -53,6 +53,19 @@
         app:icon="@android:drawable/ic_menu_preferences"
         app:iconTint="@color/black" />
 
+    <Button
+        android:id="@+id/calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginTop="5dp"
+        android:background="#000000"
+        android:text="Calendar"
+        android:textAllCaps="false"
+        app:backgroundTint="@color/teal_200"
+        app:icon="@android:drawable/ic_menu_preferences"
+        app:iconTint="@color/black" />
+
     <ListView
         android:id="@+id/note_card"
         android:layout_width="match_parent"
