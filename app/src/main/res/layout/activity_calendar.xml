@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/calendar_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -9,7 +10,7 @@
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:layout_marginBottom="20dp"
-    tools:context=".Login">
+    tools:context=".Calendar">
 
     <TextView
         android:id="@+id/nadpisCal"
@@ -36,34 +37,52 @@
         android:layout_width="match_parent"
         android:layout_height="322dp" />
 
-    <TextView
-        android:id="@+id/note_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Note name"
-        android:textColor="@color/teal_200"
-        android:textSize="30sp" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="263dp">
 
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="From: To: "
-        android:textColor="@color/teal_200"
-        android:textSize="20sp" />
-    <TextView
-        android:id="@+id/note_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Note text: "
-        android:textColor="@color/teal_200"
-        android:textSize="20sp" />
+        <LinearLayout
+            android:id="@+id/ll_main_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="140dp"
+            android:orientation="vertical">
+
+            <View style="@style/Divider.Horizontal"/>
 
 
-<!--    <Button-->
+            <!--            <TextView-->
+            <!--                android:id="@+id/note_name"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="20dp"-->
+            <!--                android:text="Note name"-->
+            <!--                android:textColor="@color/teal_200"-->
+            <!--                android:textSize="30sp" />-->
+
+        </LinearLayout>
+    </ScrollView>
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/date"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:text="From: To: "-->
+<!--        android:textColor="@color/teal_200"-->
+<!--        android:textSize="20sp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/note_text"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:text="Note text: "-->
+<!--        android:textColor="@color/teal_200"-->
+<!--        android:textSize="20sp" />-->
+
+
+    <!--    <Button-->
 <!--        android:id="@+id/sign_out"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
