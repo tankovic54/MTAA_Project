@@ -12,7 +12,7 @@
     tools:context=".Login">
 
     <TextView
-        android:id="@+id/settings"
+        android:id="@+id/nadpisCal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Calendar"
@@ -39,11 +39,28 @@
     <TextView
         android:id="@+id/note_name"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="prvy_Note"
+        android:text="Note name"
         android:textColor="@color/teal_200"
-        android:textSize="40sp" />
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="From: To: "
+        android:textColor="@color/teal_200"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/note_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Note text: "
+        android:textColor="@color/teal_200"
+        android:textSize="20sp" />
 
 
 <!--    <Button-->
