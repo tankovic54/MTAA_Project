@@ -63,7 +63,7 @@ class UpdateAccount: AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (password_string.length in 1..5){
+            if (password_string.length <= 6){
                 password.error = "Password has to have at least 6 characters"
                 return@setOnClickListener
             }
@@ -95,9 +95,13 @@ class UpdateAccount: AppCompatActivity() {
                 e.printStackTrace()
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
             }
-            val jsonObjectRequest = JsonObjectRequest(Request.Method.PUT,url, updateData, Response.Listener<JSONObject?>
-            { response -> Toast.makeText(this, "Details updated", Toast.LENGTH_SHORT).show() },
-                    Response.ErrorListener { error -> Toast.makeText(this, "Incorrect details", Toast.LENGTH_SHORT).show() })
+            val jsonObjectRequest = JsonObjectRequest(Request.Method.PUT,url, updateData,
+                    {
+                        response -> Toast.makeText(this, "Details updated", Toast.LENGTH_SHORT).show()
+                    },
+                    {
+                        error -> Toast.makeText(this, "Incorrect details", Toast.LENGTH_SHORT).show()
+                    })
             queue.add(jsonObjectRequest)
 
             val goBack = Intent(this, settings::class.java)

@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -33,10 +34,7 @@ class RegisterClass : AppCompatActivity() {
     lateinit var changePic : Button
     var storageRef: StorageReference? = null
     var fileUri : Uri? = null
-    lateinit var bm : Bitmap
-    var byteArrayOS : ByteArrayOutputStream? = null
-    lateinit var byteArray: ByteArray
-    var encodedImage : String? = null
+    var imagePath : String? = null
     private val pickImage = 100
 
     private fun isEmailValid(email: CharSequence): Boolean {
@@ -51,54 +49,24 @@ class RegisterClass : AppCompatActivity() {
               .start()
   }
 
-    private fun chooseFile(){
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && data != null && data.data != null) {
-            val os: ByteArrayOutputStream? = null
-            fileUri = data.data
-            bm = BitmapFactory.decodeStream(fileUri?.let { contentResolver.openInputStream(it) })
-            bm.compress(Bitmap.CompressFormat.PNG, 100, os)
-//            //bm = BitmapFactory.decodeStream(fileUri?.let { contentResolver.openInputStream(it) })
-//            bm.compress(Bitmap.CompressFormat.PNG, 100, os)
-
-            //profilePicture.setImageBitmap(bm)
-//            //profilePicture.setImageURI(fileUri)
-//            bm = BitmapFactory.decodeStream(fileUri?.let { contentResolver.openInputStream(it) });
-//            bm.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOS)
-//            //bm = (profilePicture.drawable as BitmapDrawable).bitmap
-//            //bm = BitmapFactory.decodeFile(fileUri.toString())
-//            //bm.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOS)
-//            byteArray = byteArrayOS!!.toByteArray()
-//            encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT)
+        when (resultCode){
+            RESULT_OK -> {
+                fileUri = data?.data
+                imagePath = fileUri.toString()
+                profilePicture.setImageURI(imagePath!!.toUri())
+                //bm = BitmapFactory.decodeFile(imagePath)
+                //profilePicture.setImageBitmap(bm)
+            }
+            ImagePicker.RESULT_ERROR ->{
+                Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                Toast.makeText(this, "Task cancelled", Toast.LENGTH_SHORT).show()
+            }
         }
     }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
-//        super.onActivityResult(requestCode, resultCode, data)
-//        when (resultCode){
-//            RESULT_OK -> {
-//                fileUri = data?.data
-//                bm = BitmapFactory.decodeStream(fileUri?.let { contentResolver.openInputStream(it) });
-//                bm.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOS)
-//                byteArray = byteArrayOS!!.toByteArray()
-//                encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT)
-//                profilePicture.setImageBitmap(bm)
-//            }
-//            ImagePicker.RESULT_ERROR ->{
-//                Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
-//            }
-//            else -> {
-//                Toast.makeText(this, "Task cancelled", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,8 +83,6 @@ class RegisterClass : AppCompatActivity() {
 
         changePic.setOnClickListener{
             selectImage()
-            profilePicture.setImageURI(fileUri)
-            //chooseFile()
         }
 
         val buttonBack = findViewById<Button>(R.id.backButton)
@@ -165,7 +131,8 @@ class RegisterClass : AppCompatActivity() {
                 registerData.put("name", name)
                 registerData.put("password", password)
                 registerData.put("email", mail)
-                registerData.put("image", encodedImage)
+                registerData.put("image", imagePath)
+                Toast.makeText(this, imagePath, Toast.LENGTH_LONG).show()
             } catch (e: JSONException) {
                 e.printStackTrace()
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()

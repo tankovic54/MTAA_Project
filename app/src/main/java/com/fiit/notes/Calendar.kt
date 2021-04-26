@@ -66,12 +66,13 @@ class Calendar : AppCompatActivity(){
 
 
         //Thread.sleep(4_000)
-        var layOutll = findViewById<LinearLayout>(R.id.ll_main_layout)
+        val layOutll = findViewById<LinearLayout>(R.id.ll_main_layout)
         layOutll.removeAllViews()
-        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        //val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
         var nowDate = sdf.format(Date(calendarView.getDate()))
-            var index = 0
-        for (index: Int in 0..datumDo.count()-1){
+            var index: Int
+            for (index: Int in 0..datumDo.count()-1){
             Log.d("index", "index = " + index + " pocetPoznamok: $pocetPoznamok")
             Log.d("datum", "poznamka datum = " + datumDo[index] + " upraveny: $nowDate")
             if(datumDo[index] == nowDate){
@@ -163,7 +164,7 @@ class Calendar : AppCompatActivity(){
             Log.d("index", "index = " + index)
             for (index: Int in 0..pocetPoznamok){
                 Log.d("index", "index = " + index + " pocetPoznamok: $pocetPoznamok")
-                Log.d("datum", "poznamka datum = " + datumDo[index].toString() + " upraveny: $upravenyDat")
+                Log.d("datum", "poznamka datum = " + datumDo[index] + " upraveny: $upravenyDat")
                 if(datumDo[index] == upravenyDat){
                     vypis = true
 

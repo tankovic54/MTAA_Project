@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDialog
+import androidx.core.net.toUri
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -30,7 +31,7 @@ class settings : AppCompatActivity() {
     lateinit var changeDetails: Button
     lateinit var changePicture: Button
     lateinit var backBtn : Button
-    lateinit var darkModeToggle : com.google.android.material.button.MaterialButtonToggleGroup
+    lateinit var darkModeToggle : MaterialButtonToggleGroup
     var fileUri : Uri? = null
 
     private fun selectImage(){
@@ -71,6 +72,7 @@ class settings : AppCompatActivity() {
                     val answer = response.toString()
                     val obj = JSONObject(answer)
                     displayName.text = "Hello " + obj["name"].toString()
+                    profilePic.setImageURI(obj["image"].toString().toUri())
                 },
                 { Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
         nameQueue.add(stringRequest)
@@ -94,10 +96,12 @@ class settings : AppCompatActivity() {
             val url = "http://10.0.2.2:8080/api/v1/notes/$userID"
             val queue = Volley.newRequestQueue(this)
             val deleteRequest = StringRequest(Request.Method.DELETE, url,
-                    Response.Listener<String> { response ->
+                    { response ->
                         Toast.makeText(this, "All notes deleted", Toast.LENGTH_SHORT).show()
                     },
-                    Response.ErrorListener { Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
+                    {
+                        Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show()
+                    })
             queue.add(deleteRequest)
             val goHome = Intent(this, Homepage::class.java)
             startActivity(goHome)
@@ -108,10 +112,12 @@ class settings : AppCompatActivity() {
             val url = "http://10.0.2.2:8080/api/v1/users/$userID"
             val queue = Volley.newRequestQueue(this)
             val deleteRequest = StringRequest(Request.Method.DELETE, url,
-                    Response.Listener<String> { response ->
+                    { response ->
                         Toast.makeText(this, "Account deleted", Toast.LENGTH_SHORT).show()
                     },
-                    Response.ErrorListener { Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
+                    {
+                        Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show()
+                    })
             queue.add(deleteRequest)
             val goLog = Intent(this, Login::class.java)
             goLog.putExtra("userID",userID)
@@ -150,12 +156,11 @@ class settings : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(theme)
             }
         }
-        backBtn = findViewById(R.id.backbutton_settings)
+        backBtn = findViewById(R.id.backBtn_settings)
         backBtn.setOnClickListener {
             val goToHomepage = Intent(this, Homepage:: class.java)
             goToHomepage.putExtra("userID",userID)
             startActivity(goToHomepage)
         }
-
     }
 }
