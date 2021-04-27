@@ -24,7 +24,7 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-class settings : AppCompatActivity() {
+class Settings : AppCompatActivity() {
     lateinit var displayName: TextView
     lateinit var profilePic: ImageView
     lateinit var signout: Button
@@ -164,11 +164,6 @@ class settings : AppCompatActivity() {
         changePicture = findViewById(R.id.change_picture_settings)
         changePicture.setOnClickListener {
             selectImage()
-//            if (fileUri == null){
-//                fileUri = Uri.parse("android.resource://com.fiit.notes/34AD2")
-//            }
-//            val goBack = Intent(this, settings::class.java)
-//            startActivity(goBack)
         }
         darkModeToggle = findViewById(R.id.theme_picker)
         darkModeToggle.addOnButtonCheckedListener { group, checkedId, isChecked ->

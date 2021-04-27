@@ -4,12 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 import org.json.JSONObject
-
 
 class Homepage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,27 +25,40 @@ class Homepage : AppCompatActivity() {
             val goToLogin = Intent(this, Login:: class.java)
             startActivity(goToLogin)
         }
-        val addNoteBtn = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.addNote)
+        val addNoteBtn = findViewById<ImageView>(R.id.addNoteView)
         addNoteBtn.setOnClickListener{
             val createNote = Intent(this, CreateNote:: class.java)
             createNote.putExtra("userID",userID)
             startActivity(createNote)
         }
-        val settingBtn = findViewById<Button>(R.id.settings)
+        val settingBtn = findViewById<ImageView>(R.id.settingsView)
         settingBtn.setOnClickListener {
-            val settingScreen = Intent(this, settings:: class.java)
+            val settingScreen = Intent(this, Settings:: class.java)
             settingScreen.putExtra("userID",userID)
             startActivity(settingScreen)
         }
-        val calendarBtn = findViewById<Button>(R.id.calendar)
+        val calendarBtn = findViewById<ImageView>(R.id.calendarView)
         calendarBtn.setOnClickListener {
             val calendarScreen = Intent(this, Calendar:: class.java)
             calendarScreen.putExtra("userID",userID)
             startActivity(calendarScreen)
         }
+
+        val profilePic = findViewById<ImageView>(R.id.profile_picture)
+        val urlUser = "http://10.0.2.2:8080/api/v1/users/$userID"
+        val queueUser = Volley.newRequestQueue(this)
+        val userRequest = StringRequest(Request.Method.GET, urlUser,
+            { response ->
+                val answer = response.toString()
+                val obj = JSONObject(answer)
+                profilePic.setImageURI(obj["image"].toString().toUri())
+            },
+            { Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
+        queueUser.add(userRequest)
+
         val noteList = findViewById<ListView>(R.id.note_card)
         val list: MutableList<String> = ArrayList()
-        var listID: MutableList<String> = ArrayList()
+        val listID: MutableList<String> = ArrayList()
         val url = "http://10.0.2.2:8080/api/v1/notes/user/$userID"
         val queue = Volley.newRequestQueue(this)
         var arrayAdapter: ArrayAdapter<String>? = null
@@ -75,10 +88,10 @@ class Homepage : AppCompatActivity() {
 
         queue.add(stringRequest)
 
-        val favButton = findViewById<Button>(R.id.home_fav_button)
+        val favButton = findViewById<ImageView>(R.id.favNotesView)
         favButton.setOnClickListener {
             val favNotes = Intent(this, Favourite_notes:: class.java)
-            favNotes.putExtra("userID",userID)
+            favNotes.putExtra("userID", userID)
             startActivity(favNotes)
         }
         val searchbar = findViewById<androidx.appcompat.widget.SearchView>(R.id.home_search)

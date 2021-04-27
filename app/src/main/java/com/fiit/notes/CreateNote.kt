@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -65,8 +64,6 @@ class CreateNote: AppCompatActivity() {
         val textNote = findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.noteText)
         val saveNote = findViewById<Button>(R.id.saveBtn)
         if(noteIDexists){
-            /*val xx = "hahaha"
-            note_name.setText(xx)*/
             val urlGetNote = "http://10.0.2.2:8080/api/v1/notes/$noteID"
             val queueH = Volley.newRequestQueue(this)
             val stringRequest = StringRequest(Request.Method.GET, urlGetNote,{
@@ -89,15 +86,12 @@ class CreateNote: AppCompatActivity() {
 
         }
         saveNote.setOnClickListener {
-            val meno = note_name.text.toString()
+            val name = note_name.text.toString()
             val description = textNote.text.toString()
-            val datum_od = od.text.toString()
-            val datum_do = platnost.text.toString()
+            val dateFrom = od.text.toString()
+            val dateTo = platnost.text.toString()
 
-
-
-
-            if (meno.isEmpty()){
+            if (name.isEmpty()){
                 note_name.error = "Please enter note name"
                 return@setOnClickListener
             }
@@ -107,34 +101,34 @@ class CreateNote: AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (datum_od.isEmpty()){
+            if (dateFrom.isEmpty()){
                 od.error = "This field can not be empty"
                 return@setOnClickListener
             }
 
-            if (datum_do.isEmpty()){
+            if (dateTo.isEmpty()){
                 platnost.error = "This field can not be empty"
                 return@setOnClickListener
             }
 
             val current = LocalDate.now().format(ISO_LOCAL_DATE)
 
-            if (current.compareTo(datum_do) > 0){
+            if (current.compareTo(dateTo) > 0){
                 platnost.error = "Incorrect date"
                 return@setOnClickListener
             }
 
-            if (datum_od.compareTo(datum_do) > 0){
+            if (dateFrom.compareTo(dateTo) > 0){
                 od.error = "Incorrect date"
                 return@setOnClickListener
             }
 
-            if (!isValidIsoDateTime(datum_od)){
+            if (!isValidIsoDateTime(dateFrom)){
                 od.error = "Please use YYYY-MM-DD format"
                 return@setOnClickListener
             }
 
-            if (!isValidIsoDateTime(datum_do)){
+            if (!isValidIsoDateTime(dateTo)){
                 platnost.error = "Please use YYYY-MM-DD format"
                 return@setOnClickListener
             }
@@ -143,13 +137,13 @@ class CreateNote: AppCompatActivity() {
             val queue = Volley.newRequestQueue(this)
             val noteData = JSONObject()
             try {
-                noteData.put("note",meno )
+                noteData.put("note", name)
                 noteData.put("description", description)
                 noteData.put("favourite", FavButton)
-                noteData.put("fromDate", datum_od)
-                noteData.put("toDate", datum_do)
+                noteData.put("fromDate", dateFrom)
+                noteData.put("toDate", dateTo)
                 noteData.put("user_id", userID)
-                if(noteIDexists == true){
+                if(noteIDexists){
                     noteData.put("id",noteID)
                 }
             } catch (e: JSONException) {
@@ -157,26 +151,25 @@ class CreateNote: AppCompatActivity() {
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
             }
 
-            if(noteIDexists == true){
+            if(noteIDexists){
                 val urlUpdate = "http://10.0.2.2:8080/api/v1/notes/$noteID"
-                val jsonObjectRequest = JsonObjectRequest(Request.Method.PUT, urlUpdate, noteData, Response.Listener<JSONObject?>{
+                val jsonObjectRequest = JsonObjectRequest(Request.Method.PUT, urlUpdate, noteData, {
                     response ->
                     System.out.println("UPDATE NOTE")
                     Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show()
                     val goToHomepage = Intent(this, Homepage:: class.java)
                     goToHomepage.putExtra("userID",userID)
                     startActivity(goToHomepage)
-                },Response.ErrorListener { error -> Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() } )
+                }, { error -> Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
                 queue.add(jsonObjectRequest)
 
             }else{
-                val jsonObjectRequest = JsonObjectRequest(Request.Method.POST, url, noteData, Response.Listener<JSONObject?>
-                { response -> Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show()
+                val jsonObjectRequest = JsonObjectRequest(Request.Method.POST, url, noteData,
+                    { response -> Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show()
                     val goToHomepage = Intent(this, Homepage:: class.java)
                     goToHomepage.putExtra("userID",userID)
                     startActivity(goToHomepage) },
-                        Response.ErrorListener { error -> Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
-
+                    { error -> Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
                 queue.add(jsonObjectRequest)
             }
         }
@@ -186,13 +179,13 @@ class CreateNote: AppCompatActivity() {
             val urlDelete = "http://10.0.2.2:8080/api/v1/notes/$noteID"
             val deleteQueue = Volley.newRequestQueue(this)
             val deleteRequest = StringRequest(Request.Method.DELETE, urlDelete,
-                    Response.Listener<String> { response ->
+                    { response ->
                         Toast.makeText(this, "Note deleted", Toast.LENGTH_SHORT).show()
                         val goHome = Intent(this, Homepage::class.java)
                         goHome.putExtra("userID",userID)
                         startActivity(goHome)
                     },
-                    Response.ErrorListener {
+                    {
                         Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show()
                     })
             deleteQueue.add(deleteRequest)
