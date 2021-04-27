@@ -14,12 +14,14 @@ import androidx.appcompat.app.AppCompatDialog
 import androidx.core.net.toUri
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.switchmaterial.SwitchMaterial
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 
 class settings : AppCompatActivity() {
@@ -41,12 +43,35 @@ class settings : AppCompatActivity() {
             .maxResultSize(1080, 1080)
             .start()
     }
+
+    private fun changeImage(imagePath: String)
+    {
+        val bundle = intent.extras
+        val userID = bundle!!.getString("userID")
+        val nameUrl = "http://10.0.2.2:8080/api/v1/users/$userID"
+        val queue = Volley.newRequestQueue(this)
+        val updateData = JSONObject()
+        try {
+            updateData.put("image", imagePath)
+        }
+        catch (e: JSONException) {
+            e.printStackTrace()
+            Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
+        }
+        val jsonObjectRequest = JsonObjectRequest(Request.Method.PUT, nameUrl, updateData, {
+            response -> Toast.makeText(this, "Image updated", Toast.LENGTH_SHORT).show() }, {
+            error -> Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
+            })
+        queue.add(jsonObjectRequest)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
         super.onActivityResult(requestCode, resultCode, data)
         when (resultCode){
             Activity.RESULT_OK -> {
                 fileUri = data?.data
                 profilePic.setImageURI(fileUri)
+                changeImage(fileUri.toString())
             }
             ImagePicker.RESULT_ERROR ->{
                 Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
@@ -77,7 +102,7 @@ class settings : AppCompatActivity() {
                 { Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
         nameQueue.add(stringRequest)
 
-        val backButton = findViewById<Button>(R.id.backbutton_settings)
+        val backButton = findViewById<Button>(R.id.backBtn_settings)
         backButton.setOnClickListener {
             val goHome = Intent(this, Homepage::class.java)
             startActivity(goHome)
@@ -139,11 +164,11 @@ class settings : AppCompatActivity() {
         changePicture = findViewById(R.id.change_picture_settings)
         changePicture.setOnClickListener {
             selectImage()
-            if (fileUri == null){
-                fileUri = Uri.parse("android.resource://com.fiit.notes/34AD2")
-            }
-            val goBack = Intent(this, settings::class.java)
-            startActivity(goBack)
+//            if (fileUri == null){
+//                fileUri = Uri.parse("android.resource://com.fiit.notes/34AD2")
+//            }
+//            val goBack = Intent(this, settings::class.java)
+//            startActivity(goBack)
         }
         darkModeToggle = findViewById(R.id.theme_picker)
         darkModeToggle.addOnButtonCheckedListener { group, checkedId, isChecked ->

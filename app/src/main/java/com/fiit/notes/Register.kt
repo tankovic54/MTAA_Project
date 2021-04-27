@@ -132,7 +132,6 @@ class RegisterClass : AppCompatActivity() {
                 registerData.put("password", password)
                 registerData.put("email", mail)
                 registerData.put("image", imagePath)
-                Toast.makeText(this, imagePath, Toast.LENGTH_LONG).show()
             } catch (e: JSONException) {
                 e.printStackTrace()
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()

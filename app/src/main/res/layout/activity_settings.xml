@@ -21,7 +21,7 @@
         android:textSize="40sp" />
 
     <Button
-        android:id="@+id/backbutton_settings"
+        android:id="@+id/backBtn_settings"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
