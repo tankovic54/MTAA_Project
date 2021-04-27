@@ -176,7 +176,7 @@ class Settings : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(theme)
             }
         }
-        backBtn = findViewById(R.id.backBtn_settings)
+        backBtn = findViewById(R.id.backbutton_settings)
         backBtn.setOnClickListener {
             val goToHomepage = Intent(this, Homepage:: class.java)
             goToHomepage.putExtra("userID",userID)
