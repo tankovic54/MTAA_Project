@@ -1,30 +1,64 @@
 package com.fiit.notes
 
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.DatePicker
+import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.activity_addnote.view.*
 import org.json.JSONException
 import org.json.JSONObject
+import java.text.DateFormat.getInstance
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter.ISO_DATE
 import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE
 import java.time.format.DateTimeParseException
+import java.util.*
+import java.util.Calendar
+
+fun EditText.transformIntoDatePicker(context: Context, format: String) {
+    isFocusableInTouchMode = false
+    isClickable = true
+    isFocusable = false
+    val myCalendar = Calendar.getInstance()
+    val datePickerOnDataSetListener =
+            OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                myCalendar.set(Calendar.YEAR, year)
+                myCalendar.set(Calendar.MONTH, monthOfYear)
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                val sdf = SimpleDateFormat(format, Locale.GERMANY)
+                setText(sdf.format(myCalendar.time))
+            }
+
+    setOnClickListener {
+        DatePickerDialog(
+                context, datePickerOnDataSetListener, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)
+        ).run {
+            show()
+        }
+    }
+}
 
 class CreateNote: AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun isValidIsoDateTime(date: String?): Boolean {
         return try {
-            DateTimeFormatter.ISO_DATE.parse(date)
+            ISO_DATE.parse(date)
             true
         } catch (e: DateTimeParseException) {
             false
@@ -48,8 +82,8 @@ class CreateNote: AppCompatActivity() {
 
         val cancelBtn = findViewById<Button>(R.id.cancelBtn)
         cancelBtn.setOnClickListener{
-            val goToHomepage = Intent(this, Homepage:: class.java)
-            goToHomepage.putExtra("userID",userID)
+            val goToHomepage = Intent(this, Homepage::class.java)
+            goToHomepage.putExtra("userID", userID)
             startActivity(goToHomepage)
         }
         val favourite = findViewById<Button>(R.id.favourite_button)
@@ -59,15 +93,19 @@ class CreateNote: AppCompatActivity() {
             Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
         }
         val note_name = findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.note_name)
-        val od = findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.from)
-        val platnost = findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.to)
+
+        val fromDate = findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.from)
+        fromDate.transformIntoDatePicker(this, "yyyy-MM-dd")
+
+        val toDate = findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.to)
+        toDate.transformIntoDatePicker(this, "yyyy-MM-dd")
+
         val textNote = findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.noteText)
         val saveNote = findViewById<Button>(R.id.saveBtn)
         if(noteIDexists){
             val urlGetNote = "http://10.0.2.2:8080/api/v1/notes/$noteID"
             val queueH = Volley.newRequestQueue(this)
-            val stringRequest = StringRequest(Request.Method.GET, urlGetNote,{
-                response ->
+            val stringRequest = StringRequest(Request.Method.GET, urlGetNote, { response ->
 
                 val answer = response.toString()
                 val obj1 = JSONObject(answer)
@@ -75,21 +113,21 @@ class CreateNote: AppCompatActivity() {
                 val nameHelp = obj1["note"].toString()
                 note_name.setText(nameHelp)
                 val odHelp = obj1["fromDate"].toString()
-                od.setText(odHelp)
+                fromDate.setText(odHelp)
                 val platnostHelp = obj1["toDate"].toString()
-                platnost.setText(platnostHelp)
+                toDate.setText(platnostHelp)
                 val textHelp = obj1["description"].toString()
                 textNote.setText(textHelp)
             },
-                    {Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
+                    { Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
             queueH.add(stringRequest)
 
         }
         saveNote.setOnClickListener {
             val name = note_name.text.toString()
             val description = textNote.text.toString()
-            val dateFrom = od.text.toString()
-            val dateTo = platnost.text.toString()
+            val dateFrom = fromDate.text.toString()
+            val dateTo = toDate.text.toString()
 
             if (name.isEmpty()){
                 note_name.error = "Please enter note name"
@@ -102,34 +140,34 @@ class CreateNote: AppCompatActivity() {
             }
 
             if (dateFrom.isEmpty()){
-                od.error = "This field can not be empty"
+                fromDate.error = "This field can not be empty"
                 return@setOnClickListener
             }
 
             if (dateTo.isEmpty()){
-                platnost.error = "This field can not be empty"
+                toDate.error = "This field can not be empty"
                 return@setOnClickListener
             }
 
             val current = LocalDate.now().format(ISO_LOCAL_DATE)
 
             if (current.compareTo(dateTo) > 0){
-                platnost.error = "Incorrect date"
+                toDate.error = "Incorrect date"
                 return@setOnClickListener
             }
 
             if (dateFrom.compareTo(dateTo) > 0){
-                od.error = "Incorrect date"
+                fromDate.error = "Incorrect date"
                 return@setOnClickListener
             }
 
             if (!isValidIsoDateTime(dateFrom)){
-                od.error = "Please use YYYY-MM-DD format"
+                fromDate.error = "Please use YYYY-MM-DD format"
                 return@setOnClickListener
             }
 
             if (!isValidIsoDateTime(dateTo)){
-                platnost.error = "Please use YYYY-MM-DD format"
+                toDate.error = "Please use YYYY-MM-DD format"
                 return@setOnClickListener
             }
 
@@ -144,7 +182,7 @@ class CreateNote: AppCompatActivity() {
                 noteData.put("toDate", dateTo)
                 noteData.put("user_id", userID)
                 if(noteIDexists){
-                    noteData.put("id",noteID)
+                    noteData.put("id", noteID)
                 }
             } catch (e: JSONException) {
                 e.printStackTrace()
@@ -153,23 +191,24 @@ class CreateNote: AppCompatActivity() {
 
             if(noteIDexists){
                 val urlUpdate = "http://10.0.2.2:8080/api/v1/notes/$noteID"
-                val jsonObjectRequest = JsonObjectRequest(Request.Method.PUT, urlUpdate, noteData, {
-                    response ->
+                val jsonObjectRequest = JsonObjectRequest(Request.Method.PUT, urlUpdate, noteData, { response ->
                     System.out.println("UPDATE NOTE")
                     Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show()
-                    val goToHomepage = Intent(this, Homepage:: class.java)
-                    goToHomepage.putExtra("userID",userID)
+                    val goToHomepage = Intent(this, Homepage::class.java)
+                    goToHomepage.putExtra("userID", userID)
                     startActivity(goToHomepage)
                 }, { error -> Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
                 queue.add(jsonObjectRequest)
 
             }else{
                 val jsonObjectRequest = JsonObjectRequest(Request.Method.POST, url, noteData,
-                    { response -> Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show()
-                    val goToHomepage = Intent(this, Homepage:: class.java)
-                    goToHomepage.putExtra("userID",userID)
-                    startActivity(goToHomepage) },
-                    { error -> Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
+                        { response ->
+                            Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show()
+                            val goToHomepage = Intent(this, Homepage::class.java)
+                            goToHomepage.putExtra("userID", userID)
+                            startActivity(goToHomepage)
+                        },
+                        { error -> Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
                 queue.add(jsonObjectRequest)
             }
         }
@@ -182,7 +221,7 @@ class CreateNote: AppCompatActivity() {
                     { response ->
                         Toast.makeText(this, "Note deleted", Toast.LENGTH_SHORT).show()
                         val goHome = Intent(this, Homepage::class.java)
-                        goHome.putExtra("userID",userID)
+                        goHome.putExtra("userID", userID)
                         startActivity(goHome)
                     },
                     {
