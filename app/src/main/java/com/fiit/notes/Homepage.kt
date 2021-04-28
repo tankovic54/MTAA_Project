@@ -108,8 +108,7 @@ class Homepage : AppCompatActivity() {
 
         noteList.setOnItemClickListener { parent, view, position, id ->
             if (!emptyList) {
-                val element = arrayAdapter?.getItem(position) // The item that was clicked
-                val noteID = listID.get(position)
+                val noteID = listID[position]
                 val intent = Intent(this, CreateNote::class.java)
                 intent.putExtra("userID", userID)
                 intent.putExtra("noteID", noteID)

@@ -46,7 +46,7 @@ fun EditText.transformIntoDatePicker(context: Context, format: String) {
 
     setOnClickListener {
         DatePickerDialog(
-                context, datePickerOnDataSetListener, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)
+                context, R.style.MyDatePickerDialogTheme, datePickerOnDataSetListener, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)
         ).run {
             show()
         }
