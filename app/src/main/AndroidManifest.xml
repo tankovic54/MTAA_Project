@@ -24,7 +24,7 @@
         </activity>
         <activity android:name=".Favourite_notes" />
         <activity android:name=".UpdateAccount" />
-        <activity android:name=".settings" />
+        <activity android:name=".Settings" />
         <activity android:name=".Homepage" />
         <activity android:name=".RegisterClass" />
         <activity android:name=".CreateNote" />
