@@ -97,21 +97,16 @@ class Calendar : AppCompatActivity() {
 
                             }
                         }
-                        Log.d("datum", "selected date:$nowDate")
-
                     }
 
                 },
                 { Toast.makeText(this, "Error occured", Toast.LENGTH_SHORT).show() })
 
         queue.add(stringRequest)
-        queue.start()
-        Thread.sleep(6000)
 
         if (emptyList == false) {
 
             calendarView.setOnDateChangeListener { calendarView, rok, mesiac, den ->
-                Toast.makeText(this@Calendar, "selected date: $den-$mesiac-$rok", Toast.LENGTH_LONG).show()
                 val mesiacu = mesiac + 1
                 //rok mesiac den potrebujem
 
