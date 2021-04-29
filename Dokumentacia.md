@@ -10,8 +10,6 @@ Akonáhle sa užívateľ úspešne zaregistruje, tak sa dostane na obrazovku log
 Samotné poznámky majú svoj názov ako aj obdobie platnosti, do kedy sú platné, pričom sa správnosť údajov kontroluje ako na back-ende tak aj v aplikačnej rovine. Následne zadáva užívateľ samotný text poznámky. Taktiež môže zvoliť, či označí poznámku za obľúbenú. Ak je takto zvolená, zobrazí sa vo filtri Favourite notes. Okrem vytvorenia poznámky má užívateľ možnosť editovať svoje poznámky kliknutím na názov poznámky v zozname a môže ju aj zmazať. 
 
 Okrem poznámok je na domovskej obrazovke k dispozícií aj možnosť Nastavenia, kde si užívateľ môže zmeniť svoje prihlasovacie údaje, ako aj profilový obrázok alebo zobrazované užívateľské meno. Taktiež má možnosť sa odhlásiť z aplikácie, prípadne aj vymazať všetky poznámky či účet.  Taktiež sa dá nastaviť téma aplikácie, a to medzi svetlým, tmavým alebo režimom, ktorý nasleduje systémové nastavenia.
-
-> Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1NTM3MTMzNDNdfQ==
+eyJoaXN0b3J5IjpbLTYyNjYxMjY0OSwtMTU1MzcxMzM0M119
 -->
