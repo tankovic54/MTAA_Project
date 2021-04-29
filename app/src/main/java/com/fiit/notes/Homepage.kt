@@ -41,6 +41,7 @@ class Homepage : AppCompatActivity() {
         calendarBtn.setOnClickListener {
             val calendarScreen = Intent(this, Calendar:: class.java)
             calendarScreen.putExtra("userID",userID)
+            //calendarScreen.putExtra("poznamky",obj)
             startActivity(calendarScreen)
         }
 
@@ -61,11 +62,12 @@ class Homepage : AppCompatActivity() {
         val listID: MutableList<String> = ArrayList()
         val url = "http://10.0.2.2:8080/api/v1/notes/user/$userID"
         val queue = Volley.newRequestQueue(this)
+        var obj = JSONArray()
         var arrayAdapter: ArrayAdapter<String>? = null
         val stringRequest = StringRequest(Request.Method.GET, url,
                 { response ->
                     val answer = response.toString()
-                    val obj = JSONArray(answer)
+                    obj = JSONArray(answer)
                     val pocetPoznamok = obj.length() - 1
                     if (obj.length() > 0){
                         for (index: Int in 0..pocetPoznamok){
