@@ -25,15 +25,6 @@
             android:textSize="40sp"
             android:textStyle="bold" />
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/home_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
-            android:layout_marginBottom="10dp"
-            app:iconifiedByDefault="false"
-            app:queryHint="Search" />
-
         <ImageView
             android:id="@+id/profile_picture"
             android:layout_width="80dp"
@@ -41,6 +32,16 @@
             android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/homeBackButton"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="10dp"
+        app:icon="?attr/homeAsUpIndicator"
+        app:iconTint="@color/teal_200" />
 
     <LinearLayout
         android:layout_width="345dp"
@@ -157,16 +158,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/homeBackButton"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="40dp"
-            app:icon="?attr/homeAsUpIndicator"
-            app:iconTint="@color/teal_200" />
         <ImageView
             android:id="@+id/addNoteView"
             android:clickable="true"

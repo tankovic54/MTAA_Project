@@ -21,7 +21,7 @@ class Favourite_notes : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favourite_notes)
 
-        val backBtn = findViewById<Button>(R.id.favHomeButton)
+        val backBtn = findViewById<Button>(R.id.FavBackButton)
         backBtn.setOnClickListener {
             val home = Intent(this, Homepage:: class.java)
             home.putExtra("userID",userID)

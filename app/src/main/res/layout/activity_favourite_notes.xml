@@ -22,14 +22,14 @@
         android:textSize="40sp"/>
 
     <Button
-        android:id="@+id/favHomeButton"
+        android:id="@+id/FavBackButton"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:layout_marginTop="4dp"
-        android:textAllCaps="false"
-        app:icon="@drawable/abc_vector_test" />
+        android:layout_gravity="start"
+        android:layout_marginTop="20dp"
+        app:icon="?attr/homeAsUpIndicator"
+        app:iconTint="@color/teal_200" />
 
     <ListView
         android:id="@+id/fav_notes_list"
